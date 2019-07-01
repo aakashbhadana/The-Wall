@@ -1,363 +1,52 @@
 <!DOCTYPE html>
 <html>
 
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Welcome to The Wall.</title>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Welcome to The Wall.</title>
 
-    <!-- Linking Bulma UI kit CSS & Font Awesome -->
+        <!-- Linking Bulma UI kit CSS, Animate CSS and Font Awesome -->
 
-    <link rel="stylesheet" href="css/bulma.css">
-    <script defer src="js/all.js"></script>
+        <link rel="stylesheet" href="css/bulma.css">
+        <link rel="stylesheet" href="css/animate.css">
+        <link rel="stylesheet" href="css/animations.css">
+        <script defer src="js/all.js"></script>
 
-    <style>
-        html {
-            overflow: hidden;
-        }
-
-    </style>
-
-    <!-- CSS for Spinner animation -->
-    <style>
-        .cssload-container {
-            width: 117px;
-            margin: 0 auto;
-        }
-
-        .cssload-circle-1 {
-            height: 117px;
-            width: 117px;
-            background: rgb(97, 46, 141);
-        }
-
-        .cssload-circle-2 {
-            height: 97px;
-            width: 97px;
-            background: rgb(194, 34, 134);
-        }
-
-        .cssload-circle-3 {
-            height: 78px;
-            width: 78px;
-            background: rgb(234, 34, 94);
-        }
-
-        .cssload-circle-4 {
-            height: 58px;
-            width: 58px;
-            background: rgb(237, 91, 53);
-        }
-
-        .cssload-circle-5 {
-            height: 39px;
-            width: 39px;
-            background: rgb(245, 181, 46);
-        }
-
-        .cssload-circle-6 {
-            height: 19px;
-            width: 19px;
-            background: rgb(129, 197, 64);
-        }
-
-        .cssload-circle-7 {
-            height: 10px;
-            width: 10px;
-            background: rgb(0, 163, 150);
-        }
-
-        .cssload-circle-8 {
-            height: 5px;
-            width: 5px;
-            background: rgb(22, 116, 188);
-        }
-
-        .cssload-circle-1,
-        .cssload-circle-2,
-        .cssload-circle-3,
-        .cssload-circle-4,
-        .cssload-circle-5,
-        .cssload-circle-6,
-        .cssload-circle-7,
-        .cssload-circle-8 {
-            border-bottom: none;
-            border-radius: 50%;
-            -o-border-radius: 50%;
-            -ms-border-radius: 50%;
-            -webkit-border-radius: 50%;
-            -moz-border-radius: 50%;
-            box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
-            -o-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
-            -ms-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
-            -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
-            -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
-            animation-name: cssload-spin;
-            -o-animation-name: cssload-spin;
-            -ms-animation-name: cssload-spin;
-            -webkit-animation-name: cssload-spin;
-            -moz-animation-name: cssload-spin;
-            animation-duration: 4600ms;
-            -o-animation-duration: 4600ms;
-            -ms-animation-duration: 4600ms;
-            -webkit-animation-duration: 4600ms;
-            -moz-animation-duration: 4600ms;
-            animation-iteration-count: infinite;
-            -o-animation-iteration-count: infinite;
-            -ms-animation-iteration-count: infinite;
-            -webkit-animation-iteration-count: infinite;
-            -moz-animation-iteration-count: infinite;
-            animation-timing-function: linear;
-            -o-animation-timing-function: linear;
-            -ms-animation-timing-function: linear;
-            -webkit-animation-timing-function: linear;
-            -moz-animation-timing-function: linear;
-        }
-
-
-
-        @keyframes cssload-spin {
-            from {
-                transform: rotate(0deg);
+        <style>
+            html {
+                overflow: hidden;
             }
 
-            to {
-                transform: rotate(360deg);
-            }
-        }
+        </style>
 
-        @-o-keyframes cssload-spin {
-            from {
-                -o-transform: rotate(0deg);
-            }
+    </head>
 
-            to {
-                -o-transform: rotate(360deg);
-            }
-        }
+    <body>
 
-        @-ms-keyframes cssload-spin {
-            from {
-                -ms-transform: rotate(0deg);
-            }
+        <div style="width:100%;text-align: right;padding: 10px">
+            <a id="close-btn" class="button is-small is-rounded">Close</a>
+        </div>
 
-            to {
-                -ms-transform: rotate(360deg);
-            }
-        }
+        <!-- First time Welcome Screen -->
 
-        @-webkit-keyframes cssload-spin {
-            from {
-                -webkit-transform: rotate(0deg);
-            }
-
-            to {
-                -webkit-transform: rotate(360deg);
-            }
-        }
-
-        @-moz-keyframes cssload-spin {
-            from {
-                -moz-transform: rotate(0deg);
-            }
-
-            to {
-                -moz-transform: rotate(360deg);
-            }
-        }
-
-    </style>
-
-    <!-- CSS for Clock animation -->
-
-    <style>
-        .cssload-clock {
-            border-radius: 58px;
-            border: 3px solid rgb(0, 176, 240);
-            height: 78px;
-            width: 78px;
-            position: relative;
-            left: 35%;
-            left: calc(50% - 42px);
-            left: -o-calc(50% - 42px);
-            left: -ms-calc(50% - 42px);
-            left: -webkit-calc(50% - 42px);
-            left: -moz-calc(50% - 42px);
-        }
-
-        .cssload-clock:after {
-            content: "";
-            position: absolute;
-            background-color: rgb(0, 0, 0);
-            top: 2px;
-            left: 48%;
-            height: 37px;
-            width: 4px;
-            border-radius: 5px;
-            transform-origin: 50% 97%;
-            -o-transform-origin: 50% 97%;
-            -ms-transform-origin: 50% 97%;
-            -webkit-transform-origin: 50% 97%;
-            -moz-transform-origin: 50% 97%;
-            animation: grdAiguille 2.3s linear infinite;
-            -o-animation: grdAiguille 2.3s linear infinite;
-            -ms-animation: grdAiguille 2.3s linear infinite;
-            -webkit-animation: grdAiguille 2.3s linear infinite;
-            -moz-animation: grdAiguille 2.3s linear infinite;
-        }
-
-
-
-        .cssload-clock:before {
-            content: "";
-            position: absolute;
-            background-color: rgb(0, 0, 0);
-            top: 6px;
-            left: 48%;
-            height: 34px;
-            width: 4px;
-            border-radius: 5px;
-            transform-origin: 50% 94%;
-            -o-transform-origin: 50% 94%;
-            -ms-transform-origin: 50% 94%;
-            -webkit-transform-origin: 50% 94%;
-            -moz-transform-origin: 50% 94%;
-            animation: ptAiguille 13.8s linear infinite;
-            -o-animation: ptAiguille 13.8s linear infinite;
-            -ms-animation: ptAiguille 13.8s linear infinite;
-            -webkit-animation: ptAiguille 13.8s linear infinite;
-            -moz-animation: ptAiguille 13.8s linear infinite;
-        }
-
-
-
-        @keyframes grdAiguille {
-            0% {
-                transform: rotate(0deg);
-            }
-
-            100% {
-                transform: rotate(360deg);
-            }
-        }
-
-        @-o-keyframes grdAiguille {
-            0% {
-                -o-transform: rotate(0deg);
-            }
-
-            100% {
-                -o-transform: rotate(360deg);
-            }
-        }
-
-        @-ms-keyframes grdAiguille {
-            0% {
-                -ms-transform: rotate(0deg);
-            }
-
-            100% {
-                -ms-transform: rotate(360deg);
-            }
-        }
-
-        @-webkit-keyframes grdAiguille {
-            0% {
-                -webkit-transform: rotate(0deg);
-            }
-
-            100% {
-                -webkit-transform: rotate(360deg);
-            }
-        }
-
-        @-moz-keyframes grdAiguille {
-            0% {
-                -moz-transform: rotate(0deg);
-            }
-
-            100% {
-                -moz-transform: rotate(360deg);
-            }
-        }
-
-        @keyframes ptAiguille {
-            0% {
-                transform: rotate(0deg);
-            }
-
-            100% {
-                transform: rotate(360deg);
-            }
-        }
-
-        @-o-keyframes ptAiguille {
-            0% {
-                -o-transform: rotate(0deg);
-            }
-
-            100% {
-                -o-transform: rotate(360deg);
-            }
-        }
-
-        @-ms-keyframes ptAiguille {
-            0% {
-                -ms-transform: rotate(0deg);
-            }
-
-            100% {
-                -ms-transform: rotate(360deg);
-            }
-        }
-
-        @-webkit-keyframes ptAiguille {
-            0% {
-                -webkit-transform: rotate(0deg);
-            }
-
-            100% {
-                -webkit-transform: rotate(360deg);
-            }
-        }
-
-        @-moz-keyframes ptAiguille {
-            0% {
-                -moz-transform: rotate(0deg);
-            }
-
-            100% {
-                -moz-transform: rotate(360deg);
-            }
-        }
-
-    </style>
-</head>
-
-<body>
-    
-    <div style="width:100%;text-align: right;padding: 10px">
-    <a id="close-btn" class="button is-small is-rounded">Close</a>
-    </div>
-
-    <!-- Intro Section Starts -->
-
-    <div id="intro" style="width: 100%;text-align: center;margin-top: 100px;display: ">
-        <p class="title" style="color: #000;font-size: 24px;font-family: Segoe UI Light">
-            Welcome to
-        </p>
-        <p class="title" style="font-family: Segoe UI;font-weight: bold; color: #000;font-size: 46px">
-            The Wall<span style="color: #00aff0">.</span>
-        </p>
-        <div class="cssload-container">
-            <div class="cssload-circle-1">
-                <div class="cssload-circle-2">
-                    <div class="cssload-circle-3">
-                        <div class="cssload-circle-4">
-                            <div class="cssload-circle-5">
-                                <div class="cssload-circle-6">
-                                    <div class="cssload-circle-7">
-                                        <div class="cssload-circle-8">
+        <div id="intro" class="scale-in-center" style="width: 100%;text-align: center;margin-top: 100px;display: ">
+            <p class="title" style="color: #000;font-size: 24px;font-family: Segoe UI Light">
+                Welcome to
+            </p>
+            <p class="title" style="font-family: Segoe UI;font-weight: bold; color: #000;font-size: 46px">
+                The Wall<span style="color: #00aff0">.</span>
+            </p>
+            <div class="cssload-container">
+                <div class="cssload-circle-1">
+                    <div class="cssload-circle-2">
+                        <div class="cssload-circle-3">
+                            <div class="cssload-circle-4">
+                                <div class="cssload-circle-5">
+                                    <div class="cssload-circle-6">
+                                        <div class="cssload-circle-7">
+                                            <div class="cssload-circle-8">
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -366,82 +55,82 @@
                     </div>
                 </div>
             </div>
+            <p class="title" style="color: #000;font-size: 16px;font-family: Segoe UI Light;margin-top: 30px">
+                Your place for Awesome Wallpapers<br><br>
+                <button class="button">Let's Start</button>
+            </p>
         </div>
-        <p class="title" style="color: #000;font-size: 16px;font-family: Segoe UI Light;margin-top: 30px">
-            Your place for Awesome Wallpapers<br><br>
-            <button class="button">Let's Start</button>
-        </p>
-    </div>
 
-    <!-- How it Works Section Starts -->
+        <!-- How it Works Section Starts -->
 
-    <!-- First Step -->
+        <!-- First Step -->
 
-    <div id="intro" style="width: 100%;text-align: center;margin-top: 100px;display: none">
-        <p class="title" style="color: #000;font-size: 24px;font-family: Segoe UI Light">
-            So, how it works
-        </p>
-        <p class="title" style="font-family: Segoe UI;font-weight: bold; color: #000;font-size: 46px">
-            First<span style="color: #00aff0">.</span>
-        </p>
-        <p class="title" style="color: #000;font-size: 16px;line-height: 22px;font-family: Segoe UI Light;margin-top: 30px">
-            Choose your favourite Tags to tell us what kind of<br> Wallpapers would you like on your Desktop
-        </p>
-        <div style="width: 270px;margin: auto;text-align: center">
-            <div class="field is-grouped is-grouped-multiline">
-                <div class="control">
-                    <div class="tags has-addons">
-                        <a class="tag is-link">Mountains</a>
-                        <a class="tag is-delete"></a>
+        <div id="intro" style="width: 100%;text-align: center;margin-top: 100px;display: none">
+            <p class="title" style="color: #000;font-size: 24px;font-family: Segoe UI Light">
+                So, how it works
+            </p>
+            <p class="title" style="font-family: Segoe UI;font-weight: bold; color: #000;font-size: 46px">
+                First<span style="color: #00aff0">.</span>
+            </p>
+            <p class="title" style="color: #000;font-size: 16px;line-height: 22px;font-family: Segoe UI Light;margin-top: 30px">
+                Choose your favourite Tags to tell us what kind of<br> Wallpapers would you like on your Desktop
+            </p>
+            <div style="width: 270px;margin: auto;text-align: center">
+                <div class="field is-grouped is-grouped-multiline">
+                    <div class="control">
+                        <div class="tags has-addons">
+                            <a class="tag is-link">Mountains</a>
+                            <a class="tag is-delete"></a>
+                        </div>
                     </div>
-                </div>
 
-                <div class="control">
-                    <div class="tags has-addons">
-                        <a class="tag is-link">Beach</a>
-                        <a class="tag is-delete"></a>
+                    <div class="control">
+                        <div class="tags has-addons">
+                            <a class="tag is-link">Beach</a>
+                            <a class="tag is-delete"></a>
+                        </div>
                     </div>
-                </div>
 
-                <div class="control">
-                    <div class="tags has-addons">
-                        <a class="tag is-link">Travel</a>
-                        <a class="tag is-delete"></a>
+                    <div class="control">
+                        <div class="tags has-addons">
+                            <a class="tag is-link">Travel</a>
+                            <a class="tag is-delete"></a>
+                        </div>
                     </div>
-                </div>
 
+
+                </div>
 
             </div>
-
+            <br><br>
+            <button class="button is-medium">Next</button>
         </div>
-        <br><br>
-        <button class="button is-medium">Next</button>
-    </div>
 
-    <!-- Second Step -->
+        <!-- Second Step -->
 
-    <div id="intro" style="width: 100%;text-align: center;margin-top: 100px;display: none">
-        <p class="title" style="color: #000;font-size: 24px;font-family: Segoe UI Light">
-            So, how it works
-        </p>
-        <p class="title" style="font-family: Segoe UI;font-weight: bold; color: #000;font-size: 46px">
-            Second<span style="color: #00aff0">.</span>
-        </p>
-        <p class="title" style="color: #000;font-size: 16px;line-height: 22px;font-family: Segoe UI Light;margin-top: 30px">
-            Set how often you want Wallpaper to change automatically<br>hourly, daily, weekly ?
+        <div id="intro" style="width: 100%;text-align: center;margin-top: 100px;display: none">
+            <p class="title" style="color: #000;font-size: 24px;font-family: Segoe UI Light">
+                So, how it works
+            </p>
+            <p class="title" style="font-family: Segoe UI;font-weight: bold; color: #000;font-size: 46px">
+                Second<span style="color: #00aff0">.</span>
+            </p>
+            <p class="title" style="color: #000;font-size: 16px;line-height: 22px;font-family: Segoe UI Light;margin-top: 30px">
+                Set how often you want Wallpaper to change automatically<br>hourly, daily, weekly ?
             <div class="cssload-clock"></div>
-        </p>
+            </p>
 
         <br><br>
         <button class="button is-medium">Get in</button>
-    </div>
-<script type=text/javascript>
-const remote = require('electron').remote;
-      document.getElementById("close-btn").addEventListener("click", function (e) {
-       var window = remote.getCurrentWindow();
-       window.close();
-  }); 
-</script>
-</body>
+        </div>
 
+    <!-- Javscript for App Close button -->
+
+    <script type=text/javascript>
+        const remote=require('electron').remote; 
+        document.getElementById("close-btn").addEventListener("click", function (e) {
+            var window=remote.getCurrentWindow(); window.close(); 
+        }); 
+    </script> 
+    </body> 
 </html>

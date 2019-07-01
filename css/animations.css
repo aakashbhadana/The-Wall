@@ -1,0 +1,343 @@
+/* Colorful spinner animation */
+
+.cssload-container {
+    width: 117px;
+    margin: 0 auto;
+}
+
+.cssload-circle-1 {
+    height: 117px;
+    width: 117px;
+    background: rgb(97, 46, 141);
+}
+
+.cssload-circle-2 {
+    height: 97px;
+    width: 97px;
+    background: rgb(194, 34, 134);
+}
+
+.cssload-circle-3 {
+    height: 78px;
+    width: 78px;
+    background: rgb(234, 34, 94);
+}
+
+.cssload-circle-4 {
+    height: 58px;
+    width: 58px;
+    background: rgb(237, 91, 53);
+}
+
+.cssload-circle-5 {
+    height: 39px;
+    width: 39px;
+    background: rgb(245, 181, 46);
+}
+
+.cssload-circle-6 {
+    height: 19px;
+    width: 19px;
+    background: rgb(129, 197, 64);
+}
+
+.cssload-circle-7 {
+    height: 10px;
+    width: 10px;
+    background: rgb(0, 163, 150);
+}
+
+.cssload-circle-8 {
+    height: 5px;
+    width: 5px;
+    background: rgb(22, 116, 188);
+}
+
+.cssload-circle-1,
+.cssload-circle-2,
+.cssload-circle-3,
+.cssload-circle-4,
+.cssload-circle-5,
+.cssload-circle-6,
+.cssload-circle-7,
+.cssload-circle-8 {
+    border-bottom: none;
+    border-radius: 50%;
+    -o-border-radius: 50%;
+    -ms-border-radius: 50%;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
+    -o-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
+    -ms-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
+    -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
+    -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
+    animation-name: cssload-spin;
+    -o-animation-name: cssload-spin;
+    -ms-animation-name: cssload-spin;
+    -webkit-animation-name: cssload-spin;
+    -moz-animation-name: cssload-spin;
+    animation-duration: 4600ms;
+    -o-animation-duration: 4600ms;
+    -ms-animation-duration: 4600ms;
+    -webkit-animation-duration: 4600ms;
+    -moz-animation-duration: 4600ms;
+    animation-iteration-count: infinite;
+    -o-animation-iteration-count: infinite;
+    -ms-animation-iteration-count: infinite;
+    -webkit-animation-iteration-count: infinite;
+    -moz-animation-iteration-count: infinite;
+    animation-timing-function: linear;
+    -o-animation-timing-function: linear;
+    -ms-animation-timing-function: linear;
+    -webkit-animation-timing-function: linear;
+    -moz-animation-timing-function: linear;
+}
+
+
+
+@keyframes cssload-spin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@-o-keyframes cssload-spin {
+    from {
+        -o-transform: rotate(0deg);
+    }
+
+    to {
+        -o-transform: rotate(360deg);
+    }
+}
+
+@-ms-keyframes cssload-spin {
+    from {
+        -ms-transform: rotate(0deg);
+    }
+
+    to {
+        -ms-transform: rotate(360deg);
+    }
+}
+
+@-webkit-keyframes cssload-spin {
+    from {
+        -webkit-transform: rotate(0deg);
+    }
+
+    to {
+        -webkit-transform: rotate(360deg);
+    }
+}
+
+@-moz-keyframes cssload-spin {
+    from {
+        -moz-transform: rotate(0deg);
+    }
+
+    to {
+        -moz-transform: rotate(360deg);
+    }
+}
+
+/* Clock animation */
+
+.cssload-clock {
+    border-radius: 58px;
+    border: 3px solid rgb(0, 176, 240);
+    height: 78px;
+    width: 78px;
+    position: relative;
+    left: 35%;
+    left: calc(50% - 42px);
+    left: -o-calc(50% - 42px);
+    left: -ms-calc(50% - 42px);
+    left: -webkit-calc(50% - 42px);
+    left: -moz-calc(50% - 42px);
+}
+
+.cssload-clock:after {
+    content: "";
+    position: absolute;
+    background-color: rgb(0, 0, 0);
+    top: 2px;
+    left: 48%;
+    height: 37px;
+    width: 4px;
+    border-radius: 5px;
+    transform-origin: 50% 97%;
+    -o-transform-origin: 50% 97%;
+    -ms-transform-origin: 50% 97%;
+    -webkit-transform-origin: 50% 97%;
+    -moz-transform-origin: 50% 97%;
+    animation: grdAiguille 2.3s linear infinite;
+    -o-animation: grdAiguille 2.3s linear infinite;
+    -ms-animation: grdAiguille 2.3s linear infinite;
+    -webkit-animation: grdAiguille 2.3s linear infinite;
+    -moz-animation: grdAiguille 2.3s linear infinite;
+}
+
+
+
+.cssload-clock:before {
+    content: "";
+    position: absolute;
+    background-color: rgb(0, 0, 0);
+    top: 6px;
+    left: 48%;
+    height: 34px;
+    width: 4px;
+    border-radius: 5px;
+    transform-origin: 50% 94%;
+    -o-transform-origin: 50% 94%;
+    -ms-transform-origin: 50% 94%;
+    -webkit-transform-origin: 50% 94%;
+    -moz-transform-origin: 50% 94%;
+    animation: ptAiguille 13.8s linear infinite;
+    -o-animation: ptAiguille 13.8s linear infinite;
+    -ms-animation: ptAiguille 13.8s linear infinite;
+    -webkit-animation: ptAiguille 13.8s linear infinite;
+    -moz-animation: ptAiguille 13.8s linear infinite;
+}
+
+
+
+@keyframes grdAiguille {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@-o-keyframes grdAiguille {
+    0% {
+        -o-transform: rotate(0deg);
+    }
+
+    100% {
+        -o-transform: rotate(360deg);
+    }
+}
+
+@-ms-keyframes grdAiguille {
+    0% {
+        -ms-transform: rotate(0deg);
+    }
+
+    100% {
+        -ms-transform: rotate(360deg);
+    }
+}
+
+@-webkit-keyframes grdAiguille {
+    0% {
+        -webkit-transform: rotate(0deg);
+    }
+
+    100% {
+        -webkit-transform: rotate(360deg);
+    }
+}
+
+@-moz-keyframes grdAiguille {
+    0% {
+        -moz-transform: rotate(0deg);
+    }
+
+    100% {
+        -moz-transform: rotate(360deg);
+    }
+}
+
+@keyframes ptAiguille {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@-o-keyframes ptAiguille {
+    0% {
+        -o-transform: rotate(0deg);
+
+    }
+    100% {
+        -o-transform: rotate(360deg);
+    }
+}
+
+@-ms-keyframes ptAiguille {
+    0% {
+        -ms-transform: rotate(0deg);
+    }
+
+    100% {
+        -ms-transform: rotate(360deg);
+    }
+}
+
+@-webkit-keyframes ptAiguille {
+    0% {
+        -webkit-transform: rotate(0deg);
+    }
+
+    100% {
+        -webkit-transform: rotate(360deg);
+    }
+}
+
+@-moz-keyframes ptAiguille {
+    0% {
+        -moz-transform: rotate(0deg);
+    }
+
+    100% {
+        -moz-transform: rotate(360deg);
+    }
+}
+
+/* Scale-In Center Animation */
+
+@-webkit-keyframes scale-in-center {
+  0% {
+    -webkit-transform: scale(0);
+            transform: scale(0);
+    opacity: 1;
+  }
+  100% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+    opacity: 1;
+  }
+}
+@keyframes scale-in-center {
+  0% {
+    -webkit-transform: scale(0);
+            transform: scale(0);
+    opacity: 1;
+  }
+  100% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.scale-in-center {
+	-webkit-animation: scale-in-center 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+	        animation: scale-in-center 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+}
+
+
