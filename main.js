@@ -12,6 +12,7 @@ function createWindow() {
     // Create the browser window.
     win = new BrowserWindow({
         frame: false,
+        resizable: false,
         width: 800,
         height: 600,
         icon: path.join(__dirname, 'assets/icons/wall.png'),
