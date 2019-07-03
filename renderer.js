@@ -31,12 +31,11 @@ ipcRenderer.on('deletedTag', (event, messages) => {
     element.parentNode.removeChild(element);
 });
 
-ipcRenderer.on('populateTags', (event, messages) => {
-    if(messages == ""){
+ipcRenderer.on('populateTags', (event, tags) => {
+    if(tags.length < 1){
         document.getElementById('Tags').innerHTML = "<img src=\"assets/empty.png\" style=\"width:35px;height:35px;vertical-align:middle;margin-right:15px;margin-left:20px\"><span style=\"font-size:12px;font-family:Segoe UI;color:#666\">Try adding some<br> Tags</span>"
     }else{
-        let tags = messages.split(',');
-        for(let i=0; i<tags.length-1; i++){
+        for(let i=0; i<tags.length; i++){
             document.getElementById('Tags').innerHTML += "<div id=\""+tags[i]+"\" class=\"control\"><div class=\"tags has-addons\"><a class=\"tag is-link\">"+tags[i]+"</a><a onclick=\"removeTag('"+tags[i]+"')\" class=\"tag is-delete\"></a></div></div>"
         }
     }
