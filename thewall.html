@@ -30,7 +30,7 @@
         <p class="title" style="font-family: Segoe UI;font-weight: bold; color: #000;font-size: 46px;text-align: center">
             The Wall<span style="color: #00aff0">.</span>
         </p>
-        <div style="padding: 0px 50px 0px 50px;width: 100%">
+        <div style="padding: 0px 40px 0px 40px;width: 100%">
             <table style="width:100%"
                    <tr>
             <td>
@@ -63,16 +63,16 @@
                     Tags
                 </p>
                 <input id="TagInput" class="input is-rounded" type="text" placeholder="Add Tags" style="width: 180px;vertical-align: middle">
-                <img src="assets/add.png" onclick="newTag()" style="width: 25px;vertical-align: middle;margin-left: 5px">
+                <img src="assets/add.png" onclick="newTag()" style="width: 29px;vertical-align: middle;margin-left: 5px">
                 <br><br>
-                <div class="field is-grouped is-grouped-multiline" id="Tags">
-
+                <div class="field is-grouped is-grouped-multiline" id="Tags" style="padding-left: 10px">
+                        
                 </div>
 
             </td>
             </tr>
         <tr>
-            <td style="padding-top: 30px">
+            <td style="padding-top: 30px;padding-right: 30px">
                 <table style="width: 100%">
                     <tr>
                         <td>
@@ -80,7 +80,7 @@
                                 Upcoming
                             </p>
                         </td>
-                        <td style="padding-right: 40px">
+                        <td style="padding-right: 60px">
                             <div style="font-size: 11px;background-color: #ffffff;float:right">
                                 Change Wallaper every&nbsp;
                                 <input class="input is-small" type="text" placeholder="HH" style="width: 25px;vertical-align: middle;border: 0;box-shadow: none;padding: 0;text-align: center;border-radius: 0">
@@ -90,13 +90,9 @@
                         </td>
                     </tr>
                 </table>
-                <div style="margin-top: 20px">
-                    <img src="assets/sample.png" style="width: 120px;border-radius: 5px;margin: 3px">
-                    <img src="assets/sample.png" style="width: 120px;border-radius: 5px;margin: 3px">
-                    <img src="assets/sample.png" style="width: 120px;border-radius: 5px;margin: 3px">
-                    <img src="assets/sample.png" style="width: 120px;border-radius: 5px;margin: 3px">
-                    <img src="assets/sample.png" style="width: 120px;border-radius: 5px;margin: 3px">   
+                <div id="Upcoming" style="margin-top: 20px;overflow-y: scroll;height: 260px;">
 
+                    
                 </div>
             </td>
         </tr>
@@ -111,6 +107,14 @@
         var window = remote.getCurrentWindow(); window.close(); 
     }); 
 
+    document.getElementById('TagInput').addEventListener("keyup", function(event) {
+        // Number 13 is the "Enter" key on the keyboard
+        if (event.keyCode === 13) {
+            event.preventDefault();
+            // Trigger the Add button
+            newTag();
+        }
+    });
 </script> 
 </body>
 </html>
