@@ -11,3 +11,11 @@ html {
 body{
     color: #000000;
 }
+.upcoming{
+    width: 120px;
+    height: 120px;
+    background-size: cover;
+    border-radius: 5px;
+    margin: 5px;
+    display:inline-block;
+}
