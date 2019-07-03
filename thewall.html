@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>The Wall.</title>
+
+        <!-- Linking Bulma UI kit CSS, Animate CSS and Font Awesome -->
+
+        <link rel="stylesheet" href="css/bulma.css">
+        <link rel="stylesheet" href="css/animate.css">
+        <link rel="stylesheet" href="css/animations.css">
+        <link rel="stylesheet" href="css/main.css">
+
+        <script defer src="js/all.js"></script>
+        <script defer src="renderer.js"></script>
+
+        <style>
+
+        </style>
+
+    </head>
+
+    <body>
+
+        <div style="width:100%;text-align: right;padding: 10px">
+            <a id="close-btn" class="button is-small is-rounded">Close</a>
+        </div>
+        <p class="title" style="font-family: Segoe UI;font-weight: bold; color: #000;font-size: 46px;text-align: center">
+            The Wall<span style="color: #00aff0">.</span>
+        </p>
+        <div style="padding: 0px 50px 0px 50px;width: 100%">
+            <table style="width:100%"
+                   <tr>
+            <td>
+                <p class="title" style="font-family: Segoe UI;; color: #000;font-size: 22px">
+                    Current
+                </p>
+
+                <table>
+                    <tr>
+                        <td>
+                            <img src="assets/sample.png" style="width: 120px;border-radius: 5px">    
+                        </td>
+                        <td style="padding-left: 20px;width: 100px;font-size: 14px">
+                            <b>By</b><br>
+                            Krissara Lertnimanorladee
+                            <br>
+                            <span style="color: #333;font-size: 12px">@sornn</span>
+                        </td>
+                        <td style="padding-left: 30px">
+                            <img src="assets/next.png" style="width: 30px">
+                        </td>
+                        <td style="padding-left: 30px">
+                            <img src="assets/play.png" style="width: 30px">
+                        </td>
+                    </tr>
+                </table>
+            </td>
+            <td rowspan="2" style=";width: 220px">
+                <p class="title" style="font-family: Segoe UI;; color: #000;font-size: 22px">
+                    Tags
+                </p>
+                <input id="TagInput" class="input is-rounded" type="text" placeholder="Add Tags" style="width: 180px;vertical-align: middle">
+                <img src="assets/add.png" onclick="newTag()" style="width: 25px;vertical-align: middle;margin-left: 5px">
+                <br><br>
+                <div class="field is-grouped is-grouped-multiline" id="Tags">
+
+                </div>
+
+            </td>
+            </tr>
+        <tr>
+            <td style="padding-top: 30px">
+                <table style="width: 100%">
+                    <tr>
+                        <td>
+                            <p class="title" style="font-family: Segoe UI;; color: #000;font-size: 22px">
+                                Upcoming
+                            </p>
+                        </td>
+                        <td style="padding-right: 40px">
+                            <div style="font-size: 11px;background-color: #ffffff;float:right">
+                                Change Wallaper every&nbsp;
+                                <input class="input is-small" type="text" placeholder="HH" style="width: 25px;vertical-align: middle;border: 0;box-shadow: none;padding: 0;text-align: center;border-radius: 0">
+                                :
+                                <input class="input is-small" type="text" placeholder="MM" style="width: 25px;vertical-align: middle;border: 0;box-shadow: none;padding: 0;text-align: center;border-radius: 0">
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+                <div style="margin-top: 20px">
+                    <img src="assets/sample.png" style="width: 120px;border-radius: 5px;margin: 3px">
+                    <img src="assets/sample.png" style="width: 120px;border-radius: 5px;margin: 3px">
+                    <img src="assets/sample.png" style="width: 120px;border-radius: 5px;margin: 3px">
+                    <img src="assets/sample.png" style="width: 120px;border-radius: 5px;margin: 3px">
+                    <img src="assets/sample.png" style="width: 120px;border-radius: 5px;margin: 3px">   
+
+                </div>
+            </td>
+        </tr>
+        </table>
+    </div>
+
+<!-- Javscript for App Close button -->
+
+<script type=text/javascript>
+
+    document.getElementById("close-btn").addEventListener("click", function (e) {
+        var window = remote.getCurrentWindow(); window.close(); 
+    }); 
+
+</script> 
+</body>
+</html>
