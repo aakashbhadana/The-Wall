@@ -20,6 +20,7 @@
     "electron": "^5.0.5"
   },
   "dependencies": {
-    "electron-store": "^4.0.0"
+    "electron-store": "^4.0.0",
+    "wallpaper": "^4.4.1"
   }
 }
