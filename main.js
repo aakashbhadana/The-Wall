@@ -1,45 +1,62 @@
 const {
     app,
-    BrowserWindow
+    BrowserWindow,
+    ipcMain
 } = require('electron')
 
-var path = require('path')
+var path = require('path');
+
+// Using electron-store module to handle JSON file storage
+const Store = require('electron-store');
+const store = new Store();
+
+
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
-let win
+let win,intro
 
 function createWindow() {
-    // Create the browser window.
+    // Create the App window.
     win = new BrowserWindow({
+        show:false,
         frame: false,
         resizable: false,
-        width: 800,
+        width: 1000,
         height: 600,
         icon: path.join(__dirname, 'assets/icons/wall.png'),
         webPreferences: {
             nodeIntegration: true
         }
     })
-
     win.setMenu(null)
-
     // and load the index.html of the app.
-    win.loadFile('intro.html')
+    win.loadFile('thewall.html')
 
+    // Waiting for window to load contents
+    win.once('ready-to-show', () => {
+        // Check for first time user
+        if(store.has('tutorial') == false){
+            store.set('tutorial','0');
+            store.set('tags','');
+            store.set('collection','');
+            store.set('time','24,0');
+        }else{
+            //Loading Tags into GUI
+            refreshTags();
+        }    
+            win.show()
+    })
 
     // Emitted when the window is closed.
     win.on('closed', () => {
-        // Dereference the window object, usually you would store windows
-        // in an array if your app supports multi windows, this is the time
-        // when you should delete the corresponding element.
+        // Dereference the window object
         win = null
     })
 }
 
-// This method will be called when Electron has finished
-// initialization and is ready to create browser windows.
-// Some APIs can only be used after this event occurs.
-app.on('ready', createWindow)
+// This method will be called when Electron has finished initialization
+
+app.on('ready',createWindow)
 
 // Quit when all windows are closed.
 app.on('window-all-closed', () => {
@@ -58,7 +75,18 @@ app.on('activate', () => {
     }
 })
 
-function closeWindow() {
-    let w = remote.getCurrentWindow()
-    w.close()
+ipcMain.on('addTag', (event, args) => {
+    store.set('tags', store.get('tags')+args+',');
+    event.sender.send('addedTag',args); 
+});
+
+ipcMain.on('deleteTag', (event, args) => {
+    let tags = store.get('tags');
+    newtags = tags.replace(args+',','');
+    store.set('tags', newtags);
+    event.sender.send('deletedTag',args); 
+});
+
+function refreshTags(){
+    win.webContents.send('populateTags',store.get('tags'));
 }
