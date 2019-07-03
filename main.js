@@ -4,15 +4,15 @@ const {
     ipcMain
 } = require('electron')
 
-var path = require('path');
+const path = require('path');
+const fs = require('fs');
+const wallpaper = require('wallpaper');
 
 // Using electron-store module to handle JSON file storage
 const Store = require('electron-store');
 const store = new Store();
 
 
-// Keep a global reference of the window object, if you don't, the window will
-// be closed automatically when the JavaScript object is garbage collected.
 let win,intro
 
 function createWindow() {
@@ -21,8 +21,8 @@ function createWindow() {
         show:false,
         frame: false,
         resizable: false,
-        width: 1000,
-        height: 600,
+        width: 920,
+        height: 650,
         icon: path.join(__dirname, 'assets/icons/wall.png'),
         webPreferences: {
             nodeIntegration: true
@@ -36,15 +36,30 @@ function createWindow() {
     win.once('ready-to-show', () => {
         // Check for first time user
         if(store.has('tutorial') == false){
+
+            //Storing Default Config to JSON file 
             store.set('tutorial','0');
             store.set('tags','');
             store.set('collection','');
             store.set('time','24,0');
+
+            // Creating DIrectory to store downloaded wallpapers
+            fs.mkdir(app.getPath('userData')+'/walls',function(err) {
+                if (err) {
+                    return console.error(err);
+                }
+                console.log("Directory walls created");
+            });
+
+
         }else{
+
+            //loading Upcoming Wallpapers into GUI
+            loadUpcoming();
             //Loading Tags into GUI
             refreshTags();
         }    
-            win.show()
+        win.show()
     })
 
     // Emitted when the window is closed.
@@ -89,4 +104,14 @@ ipcMain.on('deleteTag', (event, args) => {
 
 function refreshTags(){
     win.webContents.send('populateTags',store.get('tags'));
+}
+
+function loadUpcoming(){
+    let upcoming = [];
+    let files = fs.readdirSync(app.getPath('userData')+'/walls');
+
+    files.forEach(file => {
+        upcoming.push(file);
+    });
+    win.webContents.send('populateUpcoming',upcoming,app.getPath('userData'));
 }
