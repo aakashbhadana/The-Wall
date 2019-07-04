@@ -32,24 +32,16 @@ ipcRenderer.on('deletedTag', (event, messages) => {
 });
 
 ipcRenderer.on('populateTags', (event, tags) => {
-    if(tags.length < 1){
-        document.getElementById('Tags').innerHTML = "<img src=\"assets/empty.png\" style=\"width:35px;height:35px;vertical-align:middle;margin-right:15px;margin-left:20px\"><span style=\"font-size:12px;font-family:Segoe UI;color:#666\">Try adding some<br> Tags</span>"
-    }else{
-        for(let i=0; i<tags.length; i++){
-            document.getElementById('Tags').innerHTML += "<div id=\""+tags[i]+"\" class=\"control\"><div class=\"tags has-addons\"><a class=\"tag is-link\">"+tags[i]+"</a><a onclick=\"removeTag('"+tags[i]+"')\" class=\"tag is-delete\"></a></div></div>"
-        }
+    for (var tag_name in tags) {
+        document.getElementById('Tags').innerHTML += "<div id=\""+tag_name+"\" class=\"control\"><div class=\"tags has-addons\"><a class=\"tag is-link\">"+tag_name+"</a><a onclick=\"removeTag('"+tag_name+"')\" class=\"tag is-delete\"></a></div></div>"
     }
+
 });
 
 ipcRenderer.on('populateUpcoming', (event, walls, dir) => {
     dir = dir.replace(/\\/g,'/');
     dir = dir.replace(/ /g,'%20');
-    if(walls.length > 0){
-        for(let i=0; i<walls.length; i++){
-
-            document.getElementById('Upcoming').innerHTML += "<div class=\"upcoming\" style=\"background-image: url(' "+dir+"/walls/"+walls[i]+"');\"></div>"
-        }
-    }else{
-
-    } 
+    for (var tag_name in walls) {
+        document.getElementById('Upcoming').innerHTML += "<div class=\"upcoming\" style=\"background-image: url(' "+dir+"/walls/"+tag_name+"');\"></div>"        
+    }
 });
