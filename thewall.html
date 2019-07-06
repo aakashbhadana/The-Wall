@@ -40,8 +40,8 @@
 
                 <table>
                     <tr>
-                        <td>
-                            <img src="assets/sample.png" style="width: 120px;border-radius: 5px">    
+                        <td> 
+                            <div id="CurrentWall" class="upcoming" ></div
                         </td>
                         <td style="padding-left: 20px;width: 100px;font-size: 14px">
                             <b>By</b><br>
@@ -50,10 +50,10 @@
                             <span style="color: #333;font-size: 12px">@sornn</span>
                         </td>
                         <td style="padding-left: 30px">
-                            <img src="assets/next.png" style="width: 30px">
+                            <img src="assets/next.png" onclick="nextWall()" onmouseover="this.src='assets/next_hover.png'" onmouseout="this.src = 'assets/next.png'" style="width: 30px">
                         </td>
                         <td style="padding-left: 30px">
-                            <img src="assets/play.png" style="width: 30px">
+                            <img id="play_pause" src="assets/play.png" onclick="toggleWall()" style="width: 30px">
                         </td>
                     </tr>
                 </table>
@@ -104,7 +104,7 @@
 <script type=text/javascript>
 
     document.getElementById("close-btn").addEventListener("click", function (e) {
-        var window = remote.getCurrentWindow(); window.close(); 
+        var window = remote.getCurrentWindow(); window.hide(); 
     }); 
 
     document.getElementById('TagInput').addEventListener("keyup", function(event) {
