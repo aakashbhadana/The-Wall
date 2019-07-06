@@ -21,7 +21,9 @@
   },
   "dependencies": {
     "electron-store": "^4.0.0",
+    "internet-available": "^1.0.0",
     "request": "^2.88.0",
+    "request-promise": "^4.2.4",
     "wallpaper": "^4.4.1"
   }
 }
