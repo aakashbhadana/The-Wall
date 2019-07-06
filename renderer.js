@@ -6,6 +6,29 @@ document.getElementById("close-btn").addEventListener("click", function (e) {
     ipcRenderer.send('');    
 }); 
 
+function nextWall(){
+    ipcRenderer.send('nextWall'); 
+}
+ipcRenderer.on('switchedWall', (event, dir) => {
+    dir = dir.replace(/\\/g,'/');
+    dir = dir.replace(/ /g,'%20');
+    document.getElementById('CurrentWall').style.backgroundImage = "url('"+ dir +"')";
+
+});
+
+function toggleWall(){
+    ipcRenderer.send('toggleWall'); 
+}
+
+ipcRenderer.on('toggledWall', (event, play_pause) => {
+
+    if( play_pause == 0 ){
+        document.getElementById('play_pause').src = 'assets/play.png';
+    }else{
+        document.getElementById('play_pause').src = 'assets/pause.png';   
+    }
+});
+
 //Calling Main process to add Tag to Storeage
 function newTag(){
     let tag = document.getElementById('TagInput').value;
@@ -39,9 +62,15 @@ ipcRenderer.on('populateTags', (event, tags) => {
 });
 
 ipcRenderer.on('populateUpcoming', (event, walls, dir) => {
+
     dir = dir.replace(/\\/g,'/');
     dir = dir.replace(/ /g,'%20');
+    document.getElementById('Upcoming').innerHTML = "";
     for (var tag_name in walls) {
-        document.getElementById('Upcoming').innerHTML += "<div class=\"upcoming\" style=\"background-image: url(' "+dir+"/walls/"+tag_name+"');\"></div>"        
+
+        for(let i=0; i<walls[tag_name].length; i++){
+
+            document.getElementById('Upcoming').innerHTML += "<div class=\"upcoming\" style=\"background-image: url(' "+dir+"/walls/"+tag_name+'/'+walls[tag_name][i]+"');\"></div>";   
+        }       
     }
 });
