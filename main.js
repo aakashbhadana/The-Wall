@@ -54,6 +54,7 @@ function createWindow() {
         loadTags();
         win.webContents.send('switchedWall',store.get('current'));
         win.webContents.send('toggledWall',store.get('play_pause'));
+        win.webContents.send('currentTimer',time);
         loadUpcoming();
         win.show()
 
@@ -190,6 +191,17 @@ ipcMain.on('nextWall', (event, args) => {
 
     event.sender.send('switchedWall',path);
 
+});
+
+ipcMain.on('setTimer', (event, hr, min) => {
+
+    time['hour'] = parseInt(hr);
+    time['min'] = parseInt(min);
+    
+    if (!(isNaN(hr) || isNaN(min))){
+        store.set('time', time);    
+        event.sender.send('currentTimer',time);   
+    }
 });
 
 //Check for pending downloads

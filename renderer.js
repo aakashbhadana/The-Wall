@@ -74,3 +74,13 @@ ipcRenderer.on('populateUpcoming', (event, walls, dir) => {
         }       
     }
 });
+
+function setTimer(){
+    let hr = document.getElementById('hr').value;
+    let min =document.getElementById('min').value;
+    ipcRenderer.send('setTimer',hr,min);    
+}
+ipcRenderer.on('currentTimer', (event, time) => {
+    document.getElementById('hr').value = time['hour'];
+    document.getElementById('min').value = time['min'];
+});
