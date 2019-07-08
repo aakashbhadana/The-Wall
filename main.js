@@ -150,6 +150,16 @@ function listFiles(path){
 //Function to Change Desktop wallpapers{
 function changeWalls(){
 
+    (async () => {
+        let url = await wallpaper.get();
+        let wall = url.substring(url.lastIndexOf('\\')+1);
+
+        if( walls[wall] != undefined ){
+            win.webContents.send('callMain','deleteWall',wall);
+        }
+
+    })();
+
     let millis = 1000* ((3600 * time['hour']) + (60 * time['min'])) ;
     console.log('Changing Walls every ',millis);
 
@@ -200,6 +210,17 @@ ipcMain.on('toggleWall', (event, args) => {
 });
 
 ipcMain.on('nextWall', (event, args) => {
+
+    (async () => {
+        let url = await wallpaper.get();
+        let wall = url.substring(url.lastIndexOf('\\')+1);
+
+        if( walls[wall] != undefined ){
+            win.webContents.send('callMain','deleteWall',wall);
+        }
+
+    })();
+
     let nextTag = getRandom(walls);
     let path = app.getPath('userData')+"\\walls\\"+walls[nextTag][0]+'\\'+nextTag;
     console.log('Next Wall ', path);

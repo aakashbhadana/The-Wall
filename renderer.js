@@ -5,8 +5,8 @@ document.getElementById("close-btn").addEventListener("click", function (e) {
     ipcRenderer.send('');    
 }); 
 
-ipcRenderer.on('callMain', (event, fxn) => {
-    window[fxn]();
+ipcRenderer.on('callMain', (event, fxn, args) => {
+    window[fxn](args);
 });
 
 function setWall(name){
