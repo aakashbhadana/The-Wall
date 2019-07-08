@@ -15,12 +15,11 @@ const wallpaper = require('wallpaper');
 const request = require('request-promise');
 const Store = require('electron-store');
 const internetAvailable = require("internet-available");
-
+const shell = require('electron').shell;
 
 const store = new Store();
 var tags, walls, downloads, cache, time, backgroundDownloads, ongoing = false, checking = false, backgroundDownloading, wallTimer, deleteQueue = [];
 let win,intro, tray = null;
-
 
 //App Window
 //----------
@@ -366,12 +365,16 @@ function downloadWall(url, localPath, search, name, username, fname, lname) {
 
 //ADDING
 ipcMain.on('addTag', (event, args) => {
-    checkDownloads();
-    tags[args] = 0;
-    store.set('tags',tags);
 
-    addWalls(args);
-    event.sender.send('addedTag',args);
+    if(tags[args] == undefined){
+        tags[args] = 0;
+        store.set('tags',tags);
+        addWalls(args);
+        checkDownloads();
+        event.sender.send('addedTag',args);   
+    }else{
+        event.sender.send('tagExists',args); 
+    }
 });
 
 //DELETING
@@ -469,3 +472,39 @@ function deleteFolder(path){
         fs.rmdirSync(path);
     }
 }
+
+//----------------------
+//UPCOMING WALLS OPTIONS
+//----------------------
+
+ipcMain.on('setWall', (event, name) => {
+    let path = app.getPath('userData')+"\\walls\\"+walls[name][0]+'\\'+name;
+    console.log('Set Wall ', path);
+    (async () => {
+        await wallpaper.set(path);
+    })();
+
+    event.sender.send('switchedWall',path,walls[name][1],walls[name][2],walls[name][3]);
+});
+
+ipcMain.on('deleteWall', (event, name) => {
+
+    tags[walls[name][0]] = tags[walls[name][0]]-1;
+    store.set('tags',tags);
+
+    if( downloads[walls[name][0]] != undefined ){
+        downloads[walls[name][0]] = downloads[walls[name][0]] + 1;   
+    }else{
+        downloads[walls[name][0]] = 1;
+    }
+    store.set('downloads',downloads);
+
+    delete walls[name];
+    store.set('walls',walls);
+    loadUpcoming();
+    checkDownloads();
+});
+
+ipcMain.on('hotlink', (event, url) => {
+    shell.openExternal(url);
+});

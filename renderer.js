@@ -9,6 +9,18 @@ ipcRenderer.on('callMain', (event, fxn) => {
     window[fxn]();
 });
 
+function setWall(name){
+    ipcRenderer.send('setWall',name); 
+}
+
+function deleteWall(name){
+    ipcRenderer.send('deleteWall',name); 
+}
+
+function hotlink(name){
+    ipcRenderer.send('hotlink',name); 
+}
+
 function nextWall(){
     ipcRenderer.send('nextWall'); 
 }
@@ -49,6 +61,10 @@ ipcRenderer.on('addedTag', (event, messages) => {
     document.getElementById('Tags').innerHTML += "<div id=\""+messages+"\" class=\"control\"><div class=\"tags has-addons\"><a class=\"tag is-link\">"+messages+"</a><a onclick=\"removeTag('"+messages+"')\" class=\"tag is-delete\"></a></div></div>"
 });
 
+ipcRenderer.on('tagExists', (event, messages) => {
+    notify('Tag already added');
+});
+
 //Calling Main process to remove Tag from Storeage
 function removeTag(tag){
     ipcRenderer.send('deleteTag',tag); 
@@ -76,7 +92,7 @@ ipcRenderer.on('populateUpcoming', (event, walls, dir) => {
     document.getElementById('Upcoming').innerHTML = "";
     
     for (var file_name in walls) {
-            document.getElementById('Upcoming').innerHTML += "<div class='upcoming' style=\"background-image: url(' "+dir+"/walls/"+walls[file_name][0]+'/'+file_name+"');\" onmouseover=\"tileOverlay('"+file_name+"',1)\" onmouseout=\"tileOverlay('"+file_name+"',0)\"><div  id='tile_"+file_name+"' class='upcomingOverlay'><div class='deletebt'><img src='assets/hotlink.png' onclick=\"hotlink("+file_name+")\" style='width: 15px;vertical-align: middle;float: left;margin-left: 10px'><img src='assets/cross.png' style='width: 10px;height: 10px'></div><div id='tagFamily' class='tagFamily'>"+walls[file_name][0]+"</div><div class='usebt'>SET</div></div></div>"
+            document.getElementById('Upcoming').innerHTML += "<div class='upcoming' style=\"background-image: url(' "+dir+"/walls/"+walls[file_name][0]+'/'+file_name+"');\" onmouseover=\"tileOverlay('"+file_name+"',1)\" onmouseout=\"tileOverlay('"+file_name+"',0)\"><div  id='tile_"+file_name+"' class='upcomingOverlay'><div class='deletebt'><img src='assets/hotlink.png' onclick=\"hotlink("+file_name+")\" style='width: 15px;vertical-align: middle;float: left;margin-left: 10px'><img src='assets/cross.png'  onclick=\"deleteWall('"+file_name+"')\" style='width: 10px;height: 10px'></div><div id='tagFamily' class='tagFamily'>"+walls[file_name][0]+"</div><div class='usebt' onclick=\"setWall('"+file_name+"')\">SET</div></div></div>"
     }
 });
 
