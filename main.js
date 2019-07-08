@@ -18,7 +18,7 @@ const internetAvailable = require("internet-available");
 
 
 const store = new Store();
-var tags, walls, downloads, cache, time, backgroundDownloads, ongoing = 0, backgroundDownloading, wallTimer;
+var tags, walls, downloads, cache, time, backgroundDownloads, ongoing = false, checking = false, backgroundDownloading, wallTimer, deleteQueue = [];
 let win,intro, tray = null;
 
 
@@ -52,11 +52,14 @@ function createWindow() {
     win.once('ready-to-show', () => {     
         //loading Upcoming and Tags into GUI
         loadTags();
-        win.webContents.send('switchedWall',store.get('current'));
         win.webContents.send('toggledWall',store.get('play_pause'));
         win.webContents.send('currentTimer',time);
+        loadCurrentWall();
         loadUpcoming();
-        win.show()
+        win.show();
+        //win.toggleDevTools();
+
+        checkDownloads();
 
         if(store.get('play_pause') == 0){
             changeWalls();   
@@ -80,7 +83,8 @@ app.on('ready', () => {
     tray = new Tray('assets/icons/wall.png')
     const contextMenu = Menu.buildFromTemplate([
         { label: 'Quit', click: ()=>{win.close()}},
-        { label: 'v1.0'}
+        { label: 'Next', click: ()=>{win.webContents.send('callMain','nextWall')}},
+        { label: 'Play/Pause', click: ()=>{win.webContents.send('callMain','toggleWall')}}
     ])
     tray.setToolTip('The Wall App');
     tray.setContextMenu(contextMenu);
@@ -119,8 +123,8 @@ function createConfig(){
     store.set('collection',{});
     store.set('walls',{});
     store.set('downloads',{});
-    store.set('current','sample.png');
     store.set('play_pause',0);
+    store.set('delete',[])
     addFolder(app.getPath('userData')+'/walls');
 
 }
@@ -132,6 +136,7 @@ function fetchVariables(){
     downloads = store.get('downloads');
     cache = store.get('cache');
     time = store.get('time');
+    deleteQueue = store.get('delete');
 }
 
 //function to list directory files
@@ -148,20 +153,35 @@ function changeWalls(){
 
     let millis = 1000* ((3600 * time['hour']) + (60 * time['min'])) ;
     console.log('Changing Walls every ',millis);
+
     wallTimer = setInterval(function(){
 
         let nextTag = getRandom(walls);
-        let path = app.getPath('userData')+"\\walls\\"+nextTag+'\\'+walls[nextTag][getRandomInt(0,walls[nextTag].length - 1)];
-        store.set('current',path);
+        let path = app.getPath('userData')+"\\walls\\"+walls[nextTag][0]+'\\'+nextTag;
 
         console.log('Next Wall ', path);
         (async () => {
             await wallpaper.set(path);
         })();
 
-        event.sender.send('switchedWall',path);
+        event.sender.send('switchedWall',path,walls[nextTag][1],walls[nextTag][2],walls[nextTag][3]);
 
     },millis);
+}
+
+function loadCurrentWall(){
+    (async () => {
+        let url = await wallpaper.get();
+        console.log('URL :',url);
+        let wall = url.substring(url.lastIndexOf('\\')+1);
+        console.log('File :', wall);
+
+        if( walls[wall] != undefined ){
+            win.webContents.send('switchedWall',url,'@'+walls[wall][1],walls[wall][2],walls[wall][3]);
+        }else{
+            win.webContents.send('switchedWall',url,'','Wallpaper','set by user');
+        }
+    })();
 }
 
 ipcMain.on('toggleWall', (event, args) => {
@@ -182,14 +202,13 @@ ipcMain.on('toggleWall', (event, args) => {
 
 ipcMain.on('nextWall', (event, args) => {
     let nextTag = getRandom(walls);
-    let path = app.getPath('userData')+"\\walls\\"+nextTag+'\\'+walls[nextTag][getRandomInt(0,walls[nextTag].length - 1)];
-    store.set('current',path);
+    let path = app.getPath('userData')+"\\walls\\"+walls[nextTag][0]+'\\'+nextTag;
     console.log('Next Wall ', path);
     (async () => {
         await wallpaper.set(path);
     })();
 
-    event.sender.send('switchedWall',path);
+    event.sender.send('switchedWall',path,walls[nextTag][1],walls[nextTag][2],walls[nextTag][3]);
 
 });
 
@@ -197,7 +216,7 @@ ipcMain.on('setTimer', (event, hr, min) => {
 
     time['hour'] = parseInt(hr);
     time['min'] = parseInt(min);
-    
+
     if (!(isNaN(hr) || isNaN(min))){
         store.set('time', time);    
         event.sender.send('currentTimer',time);   
@@ -207,21 +226,25 @@ ipcMain.on('setTimer', (event, hr, min) => {
 //Check for pending downloads
 function checkDownloads(){
 
-    backgroundDownloading = setInterval(function(){
+    if( checking == false ){
+        checking = true;
+        backgroundDownloading = setInterval(function(){
 
-        console.log('Pending Downloads  => ',Object.keys(downloads).length);
-        if(Object.keys(downloads).length > 0 && ongoing == 0 && win.isVisible() == false){
+            console.log('Pending Downloads  => ',Object.keys(downloads).length);
+            if(Object.keys(downloads).length > 0 && ongoing == false){
 
-            ongoing = 1;
-            let downloadTag = getRandom(downloads);
-            console.log('Starting background downloading... => ',downloadTag);
-            Unsplash(downloadTag);
+                ongoing = true;
+                let downloadTag = getRandom(downloads);
+                console.log('Starting background downloading... => ',downloadTag);
+                Unsplash(downloadTag);
 
-        }else if(Object.keys(downloads).length == 0){
-            console.log('++ No Downloads Remaining ++')
-            clearInterval(backgroundDownloading);
-        }
-    },7000);
+            }else if(Object.keys(downloads).length == 0){
+                console.log('++ No Downloads Remaining ++')
+                checking = false;
+                clearInterval(backgroundDownloading);
+            }
+        },7000);   
+    }
 }
 
 //Function to check if Internat is available
@@ -257,7 +280,7 @@ function getRandom(obj){
 //Function to make requests to Unsplash API
 
 function requestUnsplash(search){
-    console.log("Requesting Unsplash //");
+    console.log("// Requesting Unsplash //");
     // let page = getRandomInt(1,100);
     let page = getRandomInt(0,10);
     let options = {
@@ -279,8 +302,7 @@ function requestUnsplash(search){
             h = response.results[photo].height;
             w = response.results[photo].width;
         }
-
-        downloadWall(response.results[photo].links.download,app.getPath('userData')+'/walls/'+search+'/'+response.results[photo].id+'.jpg',search, response.results[photo].id);
+        downloadWall(response.results[photo].links.download,app.getPath('userData')+'/walls/'+search+'/'+response.results[photo].id+'.jpg',search, response.results[photo].id,response.results[photo].user.username,response.results[photo].user.first_name,response.results[photo].user.last_name);
 
     }).catch(function (err) {
         console.log('## Unsplash request Error occured =>', err);
@@ -289,7 +311,7 @@ function requestUnsplash(search){
 
 //Function to download Wallpapers from link
 
-function downloadWall(url, localPath, search, name) {
+function downloadWall(url, localPath, search, name, username, fname, lname) {
 
 
     console.log('Downloading Wallpaper From => ',url,' To => ',localPath);
@@ -297,45 +319,42 @@ function downloadWall(url, localPath, search, name) {
     request.get(url).on('error', function(err) {
         console.log('Error in downloading Wall => ',err)
 
-    }).on('response', function(response) {
+    }).on('end', function(response) {
 
         if(downloads[search] == 1){
-
             delete downloads[search];
-            store.set('downloads',downloads);
-
-            tags[search] = tags[search] + 1;
-            store.set('tags',tags);
-
-            if(walls[search] == undefined){
-                walls[search] = [];
-                walls[search].push(name +'.jpg');
-            }else{
-                walls[search].push(name +'.jpg');   
-            }
-            store.set('walls',walls);
-
-            console.log('Updated pending download = ',downloads);
-
         }else{
-
             downloads[search] = downloads[search]-1; 
-            store.set('downloads',downloads);
-
-            tags[search] = tags[search] + 1;
-            store.set('tags',tags);
-
-            if(walls[search] == undefined){
-                walls[search] = [];
-                walls[search].push(name +'.jpg');
-            }else{
-                walls[search].push(name +'.jpg');   
-            }
-            store.set('walls',walls);
-
-            console.log('Updated pending downloads = ',downloads);
         }
-        ongoing = 0;
+        store.set('downloads',downloads);
+
+        tags[search] = tags[search] + 1;
+        store.set('tags',tags);
+
+        walls[name+'.jpg'] = [search,username,fname,lname];
+
+        store.set('walls',walls);
+
+        console.log('Updated pending download = ',downloads);
+        loadUpcoming();
+        ongoing = false;
+
+        let delqueue = deleteQueue.length;
+
+        while(delqueue > 0){
+
+            let args = deleteQueue[0];
+            delete tags[args];
+            store.set('tags',tags);
+            deleteWalls(args);
+
+            deleteQueue.splice(0,1);
+            delqueue = deleteQueue.length;
+
+            console.log('Tag Deleted => ',args);   
+        }
+        store.set('delete',deleteQueue);
+
         console.log('------------- Downloading Finished -------------');
 
     }).pipe(fs.createWriteStream(localPath))
@@ -347,7 +366,7 @@ function downloadWall(url, localPath, search, name) {
 
 //ADDING
 ipcMain.on('addTag', (event, args) => {
-
+    checkDownloads();
     tags[args] = 0;
     store.set('tags',tags);
 
@@ -358,11 +377,22 @@ ipcMain.on('addTag', (event, args) => {
 //DELETING
 ipcMain.on('deleteTag', (event, args) => {
 
-    delete tags[args];
-    store.set('tags',tags);
+    clearInterval(backgroundDownloading);
+    checking = false;
 
-    deleteWalls(args);
-    event.sender.send('deletedTag',args); 
+    if(ongoing == false){
+        delete tags[args];
+        store.set('tags',tags);
+
+        deleteWalls(args);
+        event.sender.send('deletedTag',args);
+        console.log('Tag Deleted => ',args);
+    }else{
+        deleteQueue.push(args);
+        store.set('delete',deleteQueue);
+        event.sender.send('deletedTag',args);
+        console.log('Added to delete queue => ',deleteQueue);
+    }
 });
 
 //LOADING
@@ -390,7 +420,11 @@ function deleteWalls(tag_name){
     delete downloads[tag_name];
     store.set('downloads',downloads);
 
-    delete walls[tag_name];
+    for (var file_name in walls) {
+        if(walls[file_name][0] == tag_name){
+            delete walls[file_name];
+        }
+    }
     store.set('walls',walls);
 
     deleteFolder(app.getPath('userData')+'/walls/'+tag_name+'/');
