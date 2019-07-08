@@ -42,37 +42,38 @@
                     <tr>
                         <td> 
                             <div id="CurrentWall" class="upcoming" ></div
-                        </td>
-                        <td style="padding-left: 20px;width: 100px;font-size: 14px">
-                            <b>By</b><br>
-                            Krissara Lertnimanorladee
-                            <br>
-                            <span style="color: #333;font-size: 12px">@sornn</span>
-                        </td>
-                        <td style="padding-left: 30px">
-                            <img src="assets/next.png" onclick="nextWall()" onmouseover="this.src='assets/next_hover.png'" onmouseout="this.src = 'assets/next.png'" style="width: 30px">
-                        </td>
-                        <td style="padding-left: 30px">
-                            <img id="play_pause" src="assets/play.png" onclick="toggleWall()" style="width: 30px">
-                        </td>
-                    </tr>
+                                </td>
+                                <td style="padding-left: 20px;width:130px;font-size: 14px;word-wrap: break-word;">
+                                    <b>By</b><br>
+                                    <span id="fname"></span><br>
+                                    <span id="lname"></span>
+                                    <br>
+                                    <span style="color: #333;font-size: 12px" id="username"></span>
+                                </td>
+                                <td style="padding-left: 30px">
+                                    <img src="assets/next.png" onclick="nextWall()" onmouseover="this.src='assets/next_hover.png'" onmouseout="this.src = 'assets/next.png'" style="width: 30px">
+                                </td>
+                                <td style="padding-left: 30px">
+                                    <img id="play_pause" src="assets/play.png" onclick="toggleWall()" style="width: 30px;cursor: pointer">
+                                </td>
+                                </tr>
                 </table>
-            </td>
+                    </td>
             <td rowspan="2" style=";width: 220px">
                 <p class="title" style="font-family: Segoe UI;; color: #000;font-size: 22px">
                     Tags
                 </p>
                 <input id="TagInput" class="input is-rounded" type="text" placeholder="Add Tags" style="width: 180px;vertical-align: middle">
-                <img src="assets/add.png" onclick="newTag()" style="width: 29px;vertical-align: middle;margin-left: 5px">
+                <img src="assets/add.png" onclick="newTag()" style="width: 29px;vertical-align: middle;margin-left: 5px;cursor: pointer">
                 <br><br>
                 <div class="field is-grouped is-grouped-multiline" id="Tags" style="padding-left: 10px">
-                        
+
                 </div>
 
             </td>
             </tr>
         <tr>
-            <td style="padding-top: 30px;padding-right: 30px">
+            <td style="padding-top: 30px;padding-right: 60px">
                 <table style="width: 100%">
                     <tr>
                         <td>
@@ -80,27 +81,30 @@
                                 Upcoming
                             </p>
                         </td>
-                        <td style="padding-right: 60px">
+                        <td style="padding-right: 0px">
                             <div style="font-size: 11px;background-color: #ffffff;float:right">
                                 Change Wallaper every&nbsp;
                                 <input id="hr" class="input is-small" type="text" placeholder="HH" style="width: 25px;vertical-align: middle;border: 0;box-shadow: none;padding: 0;text-align: center;border-radius: 0">
                                 :
                                 <input id="min" class="input is-small" type="text" placeholder="MM" style="width: 25px;vertical-align: middle;border: 0;box-shadow: none;padding: 0;text-align: center;border-radius: 0">
-                                <div onclick="setTimer()" style="display: inline-block;font-size: 9px;color: #fff;background-color: #3273dc;padding: 3px 8px 3px 8px;margin-left: 5px;border-radius: 10px">
-                                    SET
-                                </div>
+                                <img src="assets/tick.png" style="width: 18px;vertical-align: middle;margin-left: 10px;cursor: pointer">
                             </div>
                         </td>
                     </tr>
                 </table>
-                <div id="Upcoming" style="margin-top: 20px;overflow-y: scroll;height: 260px;">
 
-                    
+                <div class="scrollbar" id="style-3">
+                    <div id="Upcoming" style="height: 260px;"> 
+
+                    </div>
                 </div>
             </td>
         </tr>
         </table>
     </div>
+
+<!-- The actual snackbar -->
+<div id="snackbar">Notification</div>
 
 <!-- Javscript for App Close button -->
 
@@ -118,6 +122,26 @@
             newTag();
         }
     });
+
+    function notify(msg) {
+        // Get the snackbar DIV
+        var x = document.getElementById("snackbar");
+        x.innerHTML = msg;
+
+        // Add the "show" class to DIV
+        x.className = "show";
+
+        // After 3 seconds, remove the show class from DIV
+        setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+    }
+
+    function tileOverlay(name, state){
+        if(state == 1){
+            document.getElementById('tile_'+name).style.display = 'table';
+        }else{
+            document.getElementById('tile_'+name).style.display = 'none';
+        }
+    }
 </script> 
 </body>
 </html>
