@@ -72,6 +72,7 @@ ipcRenderer.on('populateUpcoming', (event, walls, dir) => {
 
             document.getElementById('Upcoming').innerHTML += "<div class=\"upcoming\" style=\"background-image: url(' "+dir+"/walls/"+tag_name+'/'+walls[tag_name][i]+"');\"></div>";   
         }       
+            document.getElementById('Upcoming').innerHTML += "<div class='upcoming' style=\"background-image: url(' "+dir+"/walls/"+walls[file_name][0]+'/'+file_name+"');\" onmouseover=\"tileOverlay('"+file_name+"',1)\" onmouseout=\"tileOverlay('"+file_name+"',0)\"><div  id='tile_"+file_name+"' class='upcomingOverlay'><div class='deletebt'><img src='assets/hotlink.png' onclick=\"hotlink("+file_name+")\" style='width: 15px;vertical-align: middle;float: left;margin-left: 10px'><img src='assets/cross.png' style='width: 10px;height: 10px'></div><div id='tagFamily' class='tagFamily'>"+walls[file_name][0]+"</div><div class='usebt'>SET</div></div></div>"
     }
 });
 
