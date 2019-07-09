@@ -39,11 +39,11 @@ The Snackbar
 #snackbar {
     visibility: hidden; /* Hidden by default. Visible on click */
     min-width: 120px; /* Set a default minimum width */
-    background-color: #333; /* Black background color */
+    background-color: #3273dc; /* Black background color */
     color: #fff; /* White text color */
     text-align: center; /* Centered text */
     border-radius: 2px; /* Rounded borders */
-    padding: 12px; /* Padding */
+    padding: 10px; /* Padding */
     position: fixed; /* Sit on top of the screen */
     z-index: 1; /* Add a z-index if needed */
     right: 30px; /* Center the snackbar */
@@ -87,27 +87,78 @@ The Snackbar
 
 .scrollbar
 {
-	height: 260px;
+    height: 260px;
     margin-top: 20px;
-	overflow-y: scroll;
+    overflow-y: scroll;
 }
 
 #style-3::-webkit-scrollbar-track
 {
-	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
-	background-color: #FFFFFF;
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    background-color: #FFFFFF;
     border-radius: 50px;
 }
 
 #style-3::-webkit-scrollbar
 {
-	width: 5px;
-	background-color: #FFFFFF;
+    width: 5px;
+    background-color: #FFFFFF;
     border-radius: 50px;
 }
 
 #style-3::-webkit-scrollbar-thumb
 {
-	background-color: #000000;
+    background-color: #000000;
     border-radius: 50px;
+}
+
+
+/* Downloading Gradient border animation */
+
+.blue-border{
+    --borderWidth: 5px;
+    position: relative;
+}
+.gradient-border {
+    --borderWidth: 5px;
+    position: relative;
+}
+.blue-border:after {
+    content: '';
+    position: absolute;
+    top: calc(-1 * var(--borderWidth));
+    left: calc(-1 * var(--borderWidth));
+    height: calc(100% + var(--borderWidth) * 2);
+    width: calc(100% + var(--borderWidth) * 2);
+    background: #eee;
+    border-radius: calc(2 * var(--borderWidth));
+    z-index: -1;
+    animation: animatedgradient 3s ease alternate infinite;
+    background-size: 300% 300%;
+}
+.gradient-border:after {
+    content: '';
+    position: absolute;
+    top: calc(-1 * var(--borderWidth));
+    left: calc(-1 * var(--borderWidth));
+    height: calc(100% + var(--borderWidth) * 2);
+    width: calc(100% + var(--borderWidth) * 2);
+    background: linear-gradient(60deg, #f79533, #f37055, #ef4e7b, #a166ab, #5073b8, #1098ad, #07b39b, #6fba82);
+    border-radius: calc(2 * var(--borderWidth));
+    z-index: -1;
+    animation: animatedgradient 3s ease alternate infinite;
+    background-size: 300% 300%;
+}
+
+
+@keyframes animatedgradient {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
 }
