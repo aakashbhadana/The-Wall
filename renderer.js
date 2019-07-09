@@ -5,6 +5,23 @@ document.getElementById("close-btn").addEventListener("click", function (e) {
     ipcRenderer.send('');    
 }); 
 
+
+ipcRenderer.on('downloading', (event, x) => {
+    if(x == 1){
+        document.getElementById('downloading').className = "gradient-border";   
+    }else{
+        document.getElementById('downloading').className = "blue-border";
+    }
+});
+
+ipcRenderer.on('notify', (event, msg) => {
+    notify(msg);
+});
+
+ipcRenderer.on('notify', (event, msg) => {
+    notify(msg);
+});
+
 ipcRenderer.on('callMain', (event, fxn, args) => {
     window[fxn](args);
 });
@@ -74,13 +91,13 @@ function removeTag(tag){
 ipcRenderer.on('deletedTag', (event, messages) => {
     let element = document.getElementById(messages);
     element.parentNode.removeChild(element);
-    
+
     notify('Deleted '+messages);
 });
 
 ipcRenderer.on('populateTags', (event, tags) => {
     for (var tag_name in tags) {
-        document.getElementById('Tags').innerHTML += "<div id=\""+tag_name+"\" class=\"control\"><div class=\"tags has-addons\"><a class=\"tag is-link\">"+tag_name+"</a><a onclick=\"removeTag('"+tag_name+"')\" class=\"tag is-delete\"></a></div></div>"
+        document.getElementById('Tags').innerHTML += "<div id=\""+tag_name+"\" class=\"control\"><div class=\"tags has-addons\"><a class=\"tag is-link\">"+tag_name+"</a><a onclick=\"removeTag('"+tag_name+"')\" class=\"tag is-delete\"></a></div></div>";
     }
 
 });
@@ -90,9 +107,9 @@ ipcRenderer.on('populateUpcoming', (event, walls, dir) => {
     dir = dir.replace(/\\/g,'/');
     dir = dir.replace(/ /g,'%20');
     document.getElementById('Upcoming').innerHTML = "";
-    
+
     for (var file_name in walls) {
-            document.getElementById('Upcoming').innerHTML += "<div class='upcoming' style=\"background-image: url(' "+dir+"/walls/"+walls[file_name][0]+'/'+file_name+"');\" onmouseover=\"tileOverlay('"+file_name+"',1)\" onmouseout=\"tileOverlay('"+file_name+"',0)\"><div  id='tile_"+file_name+"' class='upcomingOverlay'><div class='deletebt'><img src='assets/hotlink.png' onclick=\"hotlink("+file_name+")\" style='width: 15px;vertical-align: middle;float: left;margin-left: 10px'><img src='assets/cross.png'  onclick=\"deleteWall('"+file_name+"')\" style='width: 10px;height: 10px'></div><div id='tagFamily' class='tagFamily'>"+walls[file_name][0]+"</div><div class='usebt' onclick=\"setWall('"+file_name+"')\">SET</div></div></div>"
+        document.getElementById('Upcoming').innerHTML += "<div class='upcoming' style=\"background-image: url(' "+dir+"/walls/"+walls[file_name][0]+'/'+file_name+"');\" onmouseover=\"tileOverlay('"+file_name+"',1)\" onmouseout=\"tileOverlay('"+file_name+"',0)\"><div  id='tile_"+file_name+"' class='upcomingOverlay'><div class='deletebt'><img src='assets/hotlink.png' onclick=\"hotlink('"+walls[file_name][4]+"')\" style='width: 15px;vertical-align: middle;float: left;margin-left: 10px'><img src='assets/cross.png'  onclick=\"deleteWall('"+file_name+"')\" style='width: 10px;height: 10px'></div><div id='tagFamily' class='tagFamily'>"+walls[file_name][0]+"</div><div class='usebt' onclick=\"setWall('"+file_name+"')\">SET</div></div></div>"
     }
 });
 
