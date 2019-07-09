@@ -23,8 +23,15 @@
     </head>
 
     <body>
+        <div class="blue-border" id="downloading"></div>
 
-        <div style="width:100%;text-align: right;padding: 10px">
+        <div style="width:100%;text-align: right;padding: 10px 10px 0px 10px">
+            <div id="statusBar" style="float: left">
+                <span id="noInternet" style="font-size: 12px;display: none">
+                    <img src="assets/no_internet.png" style="width: 14px" style="vertical-align: middle;">
+                    No Internet
+                </span>
+            </div>
             <a id="close-btn" class="button is-small is-rounded">Close</a>
         </div>
         <p class="title" style="font-family: Segoe UI;font-weight: bold; color: #000;font-size: 46px;text-align: center">
@@ -41,24 +48,24 @@
                 <table>
                     <tr>
                         <td> 
-                            <div id="CurrentWall" class="upcoming" ></div
-                                </td>
-                                <td style="padding-left: 20px;width:130px;font-size: 14px;word-wrap: break-word;">
-                                    <b>By</b><br>
-                                    <span id="fname"></span><br>
-                                    <span id="lname"></span>
-                                    <br>
-                                    <span style="color: #333;font-size: 12px" id="username"></span>
-                                </td>
-                                <td style="padding-left: 30px">
-                                    <img src="assets/next.png" onclick="nextWall()" onmouseover="this.src='assets/next_hover.png'" onmouseout="this.src = 'assets/next.png'" style="width: 30px">
-                                </td>
-                                <td style="padding-left: 30px">
-                                    <img id="play_pause" src="assets/play.png" onclick="toggleWall()" style="width: 30px;cursor: pointer">
-                                </td>
-                                </tr>
+                            <div id="CurrentWall" class="upcoming" ></div>
+                        </td>
+                        <td style="padding-left: 20px;width:130px;font-size: 14px;word-wrap: break-word;">
+                            <b>By</b><br>
+                            <span id="fname"></span><br>
+                            <span id="lname"></span>
+                            <br>
+                            <span style="color: #333;font-size: 12px" id="username"></span>
+                        </td>
+                        <td style="padding-left: 30px">
+                            <img src="assets/next.png" onclick="nextWall()" onmouseover="this.src='assets/next_hover.png'" onmouseout="this.src = 'assets/next.png'" style="width: 30px">
+                        </td>
+                        <td style="padding-left: 30px">
+                            <img id="play_pause" src="assets/play.png" onclick="toggleWall()" style="width: 30px;cursor: pointer">
+                        </td>
+                    </tr>
                 </table>
-                    </td>
+            </td>
             <td rowspan="2" style=";width: 220px">
                 <p class="title" style="font-family: Segoe UI;; color: #000;font-size: 22px">
                     Tags
@@ -69,11 +76,10 @@
                 <div class="field is-grouped is-grouped-multiline" id="Tags" style="padding-left: 10px">
 
                 </div>
-
             </td>
             </tr>
         <tr>
-            <td style="padding-top: 30px;padding-right: 60px">
+            <td style="padding-top: 20px;padding-right: 60px">
                 <table style="width: 100%">
                     <tr>
                         <td>
