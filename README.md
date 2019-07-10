@@ -16,14 +16,14 @@ The Wall is a Desktop Application that automatically downloads and changes deskt
 
 * [Electron](https://electronjs.org/)
 
-## Dependecy Modules
+## NodeJs dependencies
 
-* electron-store v4.0.0
-* image-downloader v3.4.2
-* internet-available v1.0.0
-* request v2.88.0
-* request-promise v4.2.4
-* wallpaper v4.4.1
+* [request v2.88.0](https://www.npmjs.com/package/request)
+* [request-promise v4.2.4](https://www.npmjs.com/package/request-promise)
+* [electron-store v4.0.0](https://www.npmjs.com/package/electron-store)
+* [image-downloader v3.4.2](https://npmjs.com/package/image-downloader)
+* [internet-available v1.0.0](https://www.npmjs.com/package/internet-available)
+* [wallpaper v4.4.1](https://www.npmjs.com/package/wallpaper)
 
 ## Getting Started
 
