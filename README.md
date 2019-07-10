@@ -1,4 +1,4 @@
-![Alt text](assets/banner.png?raw=true "Splash")
+![The Wall](assets/banner.png?raw=true "Splash")
 
 # The Wall
 
@@ -11,6 +11,8 @@ The Wall is a Desktop Application that automatically downloads and changes deskt
 * Users can change how many wallpapers they want to be available offline per Tag
 * Downloads wallpapers automatically in background when required
 * Users can Pause or Resume automatic wallpaper change
+
+![The Wallpaper app you need](assets/youneed.png?raw=true "TheWall")
 
 ## Getting Started
 
