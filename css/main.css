@@ -10,6 +10,15 @@ html {
 }
 body{
     color: #000000;
+    
+    @font-face {
+        font-family: Segoe UI;
+        src: url(fonts/SEGOEUI.ttf);
+    }
+    @font-face {
+        font-family: Segoe UI Light;
+        src: url(fonts/SEGOEUILT.ttf);
+    }
 }
 .upcoming{
     width: 120px;
