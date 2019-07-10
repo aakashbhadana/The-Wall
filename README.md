@@ -35,9 +35,10 @@ You can directly use the App by downloading the Setup file from following link a
 * [wallpaper v4.4.1](https://www.npmjs.com/package/wallpaper)
 
 ## Design Library
+
 * [Bulma UI kit v0.7.5](https://bulma.io)
 
-## How to run locally from Source code ?
+## Running app locally from source code
 
 * Install [NodeJs](https://nodejs.org/en/) on your system
 
