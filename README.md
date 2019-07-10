@@ -44,7 +44,7 @@ You can directly use the App by downloading the Setup file from following link a
 * Use npm to install all the NodeJs dependencies mentioned in [package.json](package.json)
 
 ```sh
-npm install <module-name>
+npm install <package name>
 ```
 
 ## Contributing
