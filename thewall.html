@@ -50,9 +50,9 @@
                         <td> 
                             <div id="CurrentWall" class="upcoming" ></div>
                         </td>
-                        <td style="padding-left: 20px;width:130px;font-size: 14px;word-wrap: break-word;">
-                            <b>By</b><br>
-                            <span id="fname"></span><br>
+                        <td style="padding-left: 20px;width:130px;overflow: hidden;font-size: 14px;word-wrap: break-word;">
+                            <b>Photo by</b><br>
+                            <span id="fname"></span>
                             <span id="lname"></span>
                             <br>
                             <span style="color: #333;font-size: 12px" id="username"></span>
@@ -61,7 +61,7 @@
                             <img src="assets/next.png" onclick="nextWall()" onmouseover="this.src='assets/next_hover.png'" onmouseout="this.src = 'assets/next.png'" style="width: 30px">
                         </td>
                         <td style="padding-left: 30px">
-                            <img id="play_pause" src="assets/play.png" onclick="toggleWall()" style="width: 30px;cursor: pointer">
+                            <img id="play_pause" src="assets/pause.png" onclick="toggleWall()" style="width: 30px;cursor: pointer">
                         </td>
                     </tr>
                 </table>
@@ -91,7 +91,7 @@
                             <div style="font-size: 11px;background-color: #ffffff;float:right">
                                 Change Wallaper every&nbsp;
                                 <input id="hr" class="input is-small" type="text" placeholder="HH" style="width: 25px;vertical-align: middle;border: 0;box-shadow: none;padding: 0;text-align: center;border-radius: 0">:<input id="min" class="input is-small" type="text" placeholder="MM" style="width: 25px;vertical-align: middle;border: 0;box-shadow: none;padding: 0;text-align: center;border-radius: 0">
-                                <img src="assets/tick.png" style="width: 18px;vertical-align: middle;margin-left: 10px;cursor: pointer">
+                                <img src="assets/tick.png" onclick="setTimer()" style="width: 18px;vertical-align: middle;margin-left: 10px;cursor: pointer">
                             </div>
                         </td>
                     </tr>
@@ -99,7 +99,7 @@
 
                 <div class="scrollbar" id="style-3">
                     <div id="Upcoming" style="height: 260px;"> 
-
+                        
                     </div>
                 </div>
             </td>
