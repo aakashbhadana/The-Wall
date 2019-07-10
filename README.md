@@ -6,4 +6,7 @@ The Wall is a Desktop Application that automatically downloads and changes deskt
 
 ## Getting Started
 
-To directly use the App on Windows you can download the ".exe" file from following link [The Wall 1.0](https://github.com/aakashbhadana/The-Wall/dist/) and install it
+You can directly use the App by downloading the Setup file from following link and simply install it
+
+Windows (x64) - [The Wall_1.0_setup_x64](https://github.com/aakashbhadana/The-Wall/dist/)
+Windows (x32) - [The Wall_1.0_setup_x32](https://github.com/aakashbhadana/The-Wall/dist/)
