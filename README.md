@@ -1,4 +1,4 @@
-![Alt text](assets/splash.png?raw=true "Splash")
+![Alt text](assets/banner.png?raw=true "Splash")
 
 # The Wall
 
