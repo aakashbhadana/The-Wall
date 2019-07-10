@@ -1,5 +1,6 @@
-# The Wall
 ![Alt text](assets/splash.png?raw=true "Splash")
+
+# The Wall
 
 The Wall is a Desktop Application that automatically downloads and changes desktop wallpapers best on the Tags seleced by the user. 
 
