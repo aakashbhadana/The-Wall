@@ -12,7 +12,7 @@
         <link rel="stylesheet" href="css/animate.css">
         <link rel="stylesheet" href="css/animations.css">
         <link rel="stylesheet" href="css/main.css">
-        
+
         <script defer src="js/all.js"></script>
         <script defer src="js/renderer.js"></script>
 
@@ -53,15 +53,38 @@
             </div>
             <p class="title" style="color: #000;font-size: 16px;font-family: Segoe UI Light;margin-top: 30px">
                 Just the way you like it<br><br>
-                <button class="button">Let's Start</button>
+                <button class="button" onclick="step(0)">Let's Start</button>
             </p>
         </div>
+
+
+        <!-- License Agreement -->
+        <div id="license" class="scale-in-center" style="width: 100%;text-align: center;margin-top: 0px;padding: 60px;display: none">
+            <p class="title" style="font-family: Segoe UI Light;font-weight: bold; color: #000;font-size: 34px">
+                Open Source License<span style="color: #00aff0"> (MIT)</span><br><br>
+            </p>
+            <div style="border: 1px #ccc solid;border-radius: 10px;padding: 20px;font-size: 14px;text-align: left"  class="scrollbar" id="style-3">
+                Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:<br><br>
+                <b>
+                The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</b><br><br>
+
+                THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+                <br><br>
+                <span style="font-size: 12px">
+                    Creator : Aakash Bhadana<br>
+                    Email : aakashbhadana@outlook.com
+                </span>
+            </div>
+            <br><br>
+            <button class="button is-medium"  onclick="step(1)">I Agree</button>
+        </div>
+
 
         <!-- How it Works Section Starts -->
 
         <!-- First Step -->
 
-        <div id="intro" style="width: 100%;text-align: center;margin-top: 100px;display: none">
+        <div id="step1" class="scale-in-center" style="width: 100%;text-align: center;margin-top: 100px;display: none">
             <p class="title" style="color: #000;font-size: 24px;font-family: Segoe UI Light">
                 So, how it works
             </p>
@@ -99,12 +122,12 @@
 
             </div>
             <br><br>
-            <button class="button is-medium">Next</button>
+            <button class="button is-medium"  onclick="step(2)">Next</button>
         </div>
 
         <!-- Second Step -->
 
-        <div id="intro" style="width: 100%;text-align: center;margin-top: 100px;display: none">
+        <div id="step2" class="scale-in-center" style="width: 100%;text-align: center;margin-top: 100px;display: none">
             <p class="title" style="color: #000;font-size: 24px;font-family: Segoe UI Light">
                 So, how it works
             </p>
@@ -117,15 +140,38 @@
             </p>
 
         <br><br>
-        <button class="button is-medium">Get in</button>
+        <button class="button is-medium" onclick="finish()">Get in</button>
         </div>
 
     <!-- Javscript for App Close button -->
 
     <script type=text/javascript>
+
+        const { ipcRenderer } = require('electron');
+        const remote = require('electron').remote;
+
         document.getElementById("close-btn").addEventListener("click", function (e) {
-            var window=remote.getCurrentWindow(); window.hide(); 
+            var window=remote.getCurrentWindow(); 
+            window.close(); 
         }); 
+
+        function step(n){
+
+            if(n==0){
+                document.getElementById('intro').style.display = 'none';
+                document.getElementById('license').style.display = 'block';
+            }else if(n==1){
+                document.getElementById('license').style.display = 'none';
+                document.getElementById('step1').style.display = 'block';
+            }else{
+                document.getElementById('step1').style.display = 'none';
+                document.getElementById('step2').style.display = 'block';
+            }
+        }
+
+        function finish(){
+            ipcRenderer.send('finishSetup');
+        }
     </script> 
     </body> 
 </html>
