@@ -1,3 +1,7 @@
+/*------------------------
+Created by Aakash Bhadana |
+-------------------------*/
+
 const {
     app,
     BrowserWindow,
@@ -17,15 +21,33 @@ const downloader = require('image-downloader')
 const Store = require('electron-store');
 const internetAvailable = require("internet-available");
 const shell = require('electron').shell;
+const store = new Store(); //Storage module, storing data in config.json
 
-const store = new Store();
-var tags, walls, downloads, cache, time, backgroundDownloads, ongoing = false, ongoingTag = "", checking = false, backgroundDownloading, wallTimer, timer;
-let win,intro, tray = null;
+var tags, walls, downloads, cache, time, ongoing = false, ongoingTag = "", checking = false, backgroundDownloading, wallTimer, timer; //Run time variables
+
+/*-------------------------
+USAGE OF RUNTIME VARIABLES |
+---------------------------
+
+tags                   => Stores the user's tags and their quantity offline
+walls                  => Stores Offline available wallpapers name, tag, autho name, author's username, Unsplash html link
+downloads              => List of pending downloads
+cahce                  => Currently set wallpaper duration
+ongoing                => Flag to check if any download is in progress
+checking               => Flag to check if background download check is running
+backgroundDownloading  => Reference to background download check interval function
+walltimer              => Reference to background wallaper timer function
+timer                  => Stores amount of time completed in wallpaper duration
+
+*/
+
+var win,intro, tray = null; //Window objects
 
 //App Window
 //----------
 function createWindow() {
-    // Create the App window.
+    
+    // Create the App main window
     win = new BrowserWindow({
         show:false,
         frame: false,
@@ -39,25 +61,24 @@ function createWindow() {
     })
 
     win.setMenu(null);
-    // and load the index.html of the app.
+    
+    // and load the thewall.html of the app
     win.loadFile('thewall.html');
 
-    // Check for first time user
-    if(store.has('tutorial') == false){
-        //Storing Default Config to JSON file 
-        createConfig();
-    }
     fetchVariables();
+
     // Waiting for window to load contents
-    win.once('ready-to-show', () => {     
+    win.once('ready-to-show', () => {   
+
         //loading Upcoming and Tags into GUI
         win.webContents.send('toggledWall',store.get('play_pause'));
         win.webContents.send('currentTimer',time);
-        win.show();
         loadCurrentWall();
         loadUpcoming();
         loadTags();
+        
         //win.toggleDevTools();
+        
         checkDownloads();
 
         if(store.get('play_pause') == 0){
@@ -71,49 +92,10 @@ function createWindow() {
         checkDownloads();
     })
 }
-//---------------------------------------App Window End
+//-------------------------App Window End
 
 
-// This method will be called when Electron has finished initialization
-app.on('ready', () => {
-
-    createWindow();
-
-    tray = new Tray('assets/icons/wall.png')
-    const contextMenu = Menu.buildFromTemplate([
-        { label: 'Quit', click: ()=>{win.close()}},
-        { label: 'Next', click: ()=>{win.webContents.send('callMain','nextWall')}},
-        { label: 'Play/Pause', click: ()=>{win.webContents.send('callMain','toggleWall')}}
-    ])
-    tray.setToolTip('The Wall App');
-    tray.setContextMenu(contextMenu);
-
-    tray.on('click', () => {
-        win.isVisible() ? win.hide() : win.show();loadUpcoming();
-    })
-})
-
-// Quit when all windows are closed.
-app.on('window-all-closed', () => {
-
-    // On macOS it is common for applications and their menu bar
-    // to stay active until the user quits explicitly with Cmd + Q
-
-    if (process.platform !== 'darwin') {
-        app.quit()
-    }
-})
-
-app.on('activate', () => {
-
-    // On macOS it's common to re-create a window in the app when the
-    // dock icon is clicked and there are no other windows open.
-    if (win === null) {
-        createWindow()
-    }
-})
-
-//Function to create Config file for first-time setup
+//Creating Config file for first-time setup
 function createConfig(){
     store.set('tutorial','0');
     store.set('time',{hour:12, min:0});
@@ -128,7 +110,7 @@ function createConfig(){
 
 }
 
-//Function to update objects
+//Load runtime variables from config.json
 function fetchVariables(){
     tags = store.get('tags');
     walls = store.get('walls');
@@ -138,7 +120,7 @@ function fetchVariables(){
     timer = store.get('timer');
 }
 
-//function to list directory files
+//List directory files (Unused for now)
 function listFiles(path){
 
     let files = fs.readdirSync(path);
@@ -147,7 +129,7 @@ function listFiles(path){
     });
 }
 
-//Function to Change Desktop wallpapers{
+//Change Desktop wallpapers at intervals
 function changeWalls(){
 
     let secs = (3600 * time['hour']) + (60 * time['min']);
@@ -158,8 +140,9 @@ function changeWalls(){
         if( timer >= secs ){
 
             let nextTag = getRandom(walls);
-            //Check if Wallpapers are downloaded 
-            if(nextTag != null){
+            
+           
+            if(nextTag != null){ //Check if Wallpapers are downloaded 
                 let path = app.getPath('userData')+"\\walls\\"+walls[nextTag][0]+'\\'+nextTag;
 
                 console.log('Next Wall ', path);
@@ -189,28 +172,32 @@ function changeWalls(){
 
 }
 
+//Load currently set wallpaper
 function loadCurrentWall(){
+    
     (async () => {
-        let url = await wallpaper.get();
+        let url = await wallpaper.get();//URL of current Wallpaper
         console.log('URL :',url);
-        let wall = url.substring(url.lastIndexOf('\\')+1);
+        let wall = url.substring(url.lastIndexOf('\\')+1); //Stripping filename of current Wallpapers
         console.log('File :', wall);
 
         if( walls[wall] != undefined ){
-            win.webContents.send('switchedWall',url,'@'+walls[wall][1],walls[wall][2],walls[wall][3]);
+            win.webContents.send('switchedWall',url,walls[wall][1],walls[wall][2],walls[wall][3],walls[wall][4]);
         }else{
-            win.webContents.send('switchedWall',url,'','Wallpaper','set by user');
+            win.webContents.send('switchedWall',url,"","Wallpaper","set by user");
         }
     })();
 }
 
+//Play or Pause wallpaper change cycle
 ipcMain.on('toggleWall', (event, args) => {
 
-    if(store.get('play_pause') == 0){
+    if(store.get('play_pause') == 0){ // Stop changing wallpapers
         clearInterval(wallTimer);
         store.set('play_pause',1);
         console.log('Paused');
-    }else{
+        
+    }else{                          // Resume changing wallpapers
         changeWalls();
         store.set('play_pause',0);
         console.log('Played');
@@ -220,6 +207,7 @@ ipcMain.on('toggleWall', (event, args) => {
 
 });
 
+//Skip current wallpaper and load next
 ipcMain.on('nextWall', (event, args) => {
 
     let nextTag = getRandom(walls);
@@ -251,6 +239,7 @@ ipcMain.on('nextWall', (event, args) => {
 
 });
 
+//Load currently set wallpaper duration into GUI
 ipcMain.on('setTimer', (event, hr, min) => {
 
     time['hour'] = parseInt(hr);
@@ -258,6 +247,7 @@ ipcMain.on('setTimer', (event, hr, min) => {
 
     if (!(isNaN(hr) || isNaN(min))){
         store.set('time', time);    
+        win.webContents.send('notify','Wallpaper duration changed');
         event.sender.send('currentTimer',time);   
     }
 });
@@ -269,7 +259,7 @@ function checkDownloads(){
         checking = true;
 
         backgroundDownloading = setInterval(function(){
-            console.log('Pending Downloads  => ',Object.keys(downloads).length);
+            console.log('Pending Download Tags  => ',Object.keys(downloads).length);
 
             if(Object.keys(downloads).length > 0 && ongoing == false){
 
@@ -292,7 +282,6 @@ function checkDownloads(){
 }
 
 //Function to check if Internat is available
-
 function Unsplash(downloadTag){
     internetAvailable({
         timeout: 5000,
@@ -301,7 +290,7 @@ function Unsplash(downloadTag){
     }).then(() => {
 
         win.webContents.send('noInternet',0); // Hiding no internet status
-        requestUnsplash(downloadTag);
+        getPages(downloadTag);
 
     }).catch(() => {
 
@@ -314,7 +303,6 @@ function Unsplash(downloadTag){
 }
 
 //Function to get random integers for wallpapers addition and deletion
-
 function getRandomInt(min, max) {
     min = Math.ceil(min);
     max = Math.floor(max);
@@ -327,20 +315,44 @@ function getRandom(obj){
     if(keys.length > 0){
         return keys[ keys.length * Math.random() << 0];   
     }else{
-        return null;
+        return null; //Object is empty
     }
 }
 
+//Checking Total number of pages available on UNSPLASH
+function getPages(search){
+
+    let options = {
+        "method":"GET", 
+        uri: 'https://api.unsplash.com/search/photos?client_id=e3a425aef26263517dc26faa5bb4dfba745034e2178f31a97170d5ee17be8f61&page=1&query='+search,
+        json: true,
+        timeout: 5000,
+        headers: {
+            'User-Agent': 'Request-Promise'
+        }
+    };
+    request(options).then(function (response) {
+        requestUnsplash(search,response.total_pages);
+
+    }).catch(function (err) {
+        console.log('## Page number request error occured =>', err);
+        ongoing = false;
+        ongoingTag = "";
+        return null;
+    });
+
+    console.log("// Requesting Page number //");
+}
+
 //Function to make requests to Unsplash API
+function requestUnsplash(search, totalPages){
 
-function requestUnsplash(search){
-
-    // let page = getRandomInt(1,100);
-    let page = getRandomInt(0,10);
+    let page = getRandomInt(0,totalPages-1); // Getting random page from total available pages on UNSPLASH
     let options = {
         "method":"GET", 
         uri: 'https://api.unsplash.com/search/photos?client_id=e3a425aef26263517dc26faa5bb4dfba745034e2178f31a97170d5ee17be8f61&page='+page+'&query='+search,
         json: true,
+        timeout: 5000,
         headers: {
             'User-Agent': 'Request-Promise'
         }
@@ -356,24 +368,28 @@ function requestUnsplash(search){
             h = response.results[photo].height;
             w = response.results[photo].width;
         }
-      
+        
+        //Calling download image function
         downloadWall(response.results[photo].links.download, app.getPath('userData')+'/walls/'+search+'/'+response.results[photo].id+'.jpg', search, response.results[photo].id, response.results[photo].user.username, response.results[photo].user.first_name, response.results[photo].user.last_name, response.results[photo].links.html);
 
     }).catch(function (err) {
         console.log('## Unsplash request Error occured =>', err);
+        ongoing = false;
+        ongoingTag = "";
+        return null;
     });
 
-    console.log("// Requesting Unsplash //");
+    console.log("// Requesting Unsplash //"+page);
 }
 
-//Function to download Wallpapers from link
-
+//Function to download Wallpapers from Unsplash link
 function downloadWall(url, localPath, search, name, username, fname, lname, html) {   
 
     console.log('Downloading Wallpaper From => ',url,' To => ',localPath);
     options = {
         url: url,
-        dest: localPath
+        dest: localPath,
+        timeout: 5000 
     }
 
     download = downloader.image(options) .then(({ filename, image }) => {
@@ -405,6 +421,7 @@ function downloadWall(url, localPath, search, name, username, fname, lname, html
         loadUpcoming();
         ongoing = false;
         ongoingTag = "";
+        return null;
 
     })
 }
@@ -413,7 +430,7 @@ function downloadWall(url, localPath, search, name, username, fname, lname, html
 //FUNCTIONS FOR MANAGING USER'S TAGS
 //----------------------------------
 
-//ADDING
+//ADDING TAGS
 ipcMain.on('addTag', (event, args) => {
 
     if(tags[args] == undefined){
@@ -421,13 +438,13 @@ ipcMain.on('addTag', (event, args) => {
         store.set('tags',tags);
         addWalls(args);
         checkDownloads();
-        event.sender.send('addedTag',args);   
+        event.sender.send('addedTag',args,tags);   
     }else{
         event.sender.send('tagExists',args); 
     }
 });
 
-//DELETING
+//DELETING TAGS
 ipcMain.on('deleteTag', (event, args) => {
 
     if(ongoingTag == args){
@@ -437,11 +454,11 @@ ipcMain.on('deleteTag', (event, args) => {
     store.set('tags',tags);
 
     deleteWalls(args);
-    event.sender.send('deletedTag',args);
+    event.sender.send('deletedTag',args,tags);
     console.log('Tag Deleted => ',args);
 });
 
-//LOADING
+//LOADING TAGS
 function loadTags(){
     win.webContents.send('populateTags',tags);
 }
@@ -451,7 +468,7 @@ function loadTags(){
 //FUNCTIONS FOR MANAGING UPCOMING WALLPAPERS
 //------------------------------------------
 
-//ADDING
+//ADDING WALLPAPERS
 function addWalls(tag_name){
 
     downloads[tag_name] = cache;
@@ -460,7 +477,7 @@ function addWalls(tag_name){
 
 }
 
-//DELETING
+//DELETING WALLPAPERS
 function deleteWalls(tag_name){
 
     delete downloads[tag_name];
@@ -478,7 +495,7 @@ function deleteWalls(tag_name){
 
 }
 
-//LOADING
+//LOADING WALLPAPERS
 function loadUpcoming(){
     win.webContents.send('populateUpcoming',walls,app.getPath('userData'));
 }
@@ -487,7 +504,7 @@ function loadUpcoming(){
 //FUNCTIONS FOR MANAGING DIRECTORIES
 //----------------------------------
 
-//ADDING
+//ADDING DIRECTORY
 function addFolder(path){
     console.log('Directory created = ',path);
     fs.mkdir(path,function(err) {
@@ -501,7 +518,7 @@ function callback(){
     ;
 }
 
-//DELETING
+//DELETING DIRECTORY
 function deleteFolder(path){
     if( fs.existsSync(path) ) {
         fs.readdirSync(path).forEach(function(file,index){
@@ -520,6 +537,7 @@ function deleteFolder(path){
 //UPCOMING WALLS OPTIONS
 //----------------------
 
+//Use selected Wallapaper
 ipcMain.on('setWall', (event, name) => {
     let path = app.getPath('userData')+"\\walls\\"+walls[name][0]+'\\'+name;
     console.log('Set Wall ', path);
@@ -530,11 +548,13 @@ ipcMain.on('setWall', (event, name) => {
     event.sender.send('switchedWall',path,walls[name][1],walls[name][2],walls[name][3]);
 });
 
+//Delete Selected Wallpaper
 ipcMain.on('deleteWall', (event, name) => {
 
     tags[walls[name][0]] = tags[walls[name][0]]-1;
     store.set('tags',tags);
 
+    //Adding replacement for deleted Wallpaper
     if( downloads[walls[name][0]] != undefined ){
         downloads[walls[name][0]] = downloads[walls[name][0]] + 1;   
     }else{
@@ -548,8 +568,133 @@ ipcMain.on('deleteWall', (event, name) => {
     checkDownloads();
 });
 
+
+//Open UNSPLASH page in external browser for selected wallpaper
 ipcMain.on('hotlink', (event, url) => {
 
     shell.openExternal(url);
 });
 
+
+//First time user window
+//----------------------
+function firstTime(){
+
+    intro = new BrowserWindow({
+        show:false,
+        frame: false,
+        resizable: false,
+        width: 800,
+        height: 600,
+        icon: path.join(__dirname, 'assets/icons/wall.png'),
+        webPreferences: {
+            nodeIntegration: true
+        }
+    })
+
+    intro.setMenu(null);
+    intro.loadFile('intro.html');
+    intro.once('ready-to-show', () => {
+        intro.show();    
+    });
+
+}
+
+// FIRST TIME SETUP FINISHED
+ipcMain.on('finishSetup', (event, name) => {
+    //Storing Default Config to JSON file 
+    createConfig();
+    fetchVariables();
+    createWindow();
+
+    win.once('ready-to-show', () => {   
+
+        win.show();
+        
+        //loading Upcoming and Tags into GUI
+        win.webContents.send('toggledWall',store.get('play_pause'));
+        win.webContents.send('currentTimer',time);
+        loadCurrentWall();
+        loadUpcoming();
+        loadTags();
+        //win.toggleDevTools();
+        if(store.get('play_pause') == 0){
+            changeWalls();   
+        }
+    })
+
+    intro.close();
+    addtoStart();
+    
+    //Adding Tray icon
+    tray = new Tray(path.join(__dirname, 'assets/icons/wall.png'))
+    const contextMenu = Menu.buildFromTemplate([
+        { label: 'Quit', click: ()=>{win.close()}},
+        { label: 'Next', click: ()=>{win.webContents.send('callMain','nextWall')}},
+        { label: 'Play/Pause', click: ()=>{win.webContents.send('callMain','toggleWall')}}
+    ])
+    tray.setToolTip('The Wall App');
+    tray.setContextMenu(contextMenu);
+
+    tray.on('click', () => {
+        win.isVisible() ? win.hide() : win.show();loadUpcoming();
+    })
+});
+
+//ADD PROGRAM TO STARTUP PROGRAM LIST
+function addtoStart(){
+
+    const exeName = path.basename(process.execPath);
+    app.setLoginItemSettings({
+        openAtLogin: true,
+        path: process.execPath,
+        args: [
+            '--processStart', "${exeName}",
+            '--process-start-args', "--hidden"
+        ]
+    });
+}
+
+//This method will be called when Electron has finished initialization
+app.on('ready', () => {
+
+    // Check for first time user
+    if(store.has('tutorial') == false){
+        console.log('// FIRST TIME SETUP //')
+        firstTime();
+    }else{
+        createWindow();
+        tray = new Tray(path.join(__dirname, 'assets/icons/wall.png'))
+        const contextMenu = Menu.buildFromTemplate([
+            { label: 'Quit', click: ()=>{win.close()}},
+            { label: 'Next', click: ()=>{win.webContents.send('callMain','nextWall')}},
+            { label: 'Play/Pause', click: ()=>{win.webContents.send('callMain','toggleWall')}}
+        ])
+        tray.setToolTip('The Wall App');
+        tray.setContextMenu(contextMenu);
+
+        tray.on('click', () => {
+            win.isVisible() ? win.hide() : win.show();loadUpcoming();
+        })
+    }
+})
+
+//Quit when all windows are closed.
+app.on('window-all-closed', () => {
+
+    // On macOS it is common for applications and their menu bar
+    // to stay active until the user quits explicitly with Cmd + Q
+
+    if (process.platform !== 'darwin') {
+        app.quit()
+    }
+})
+
+app.on('activate', () => {
+
+    // On macOS it's common to re-create a window in the app when the
+    // dock icon is clicked and there are no other windows open.
+    if (win === null) {
+        createWindow()
+    }
+})
