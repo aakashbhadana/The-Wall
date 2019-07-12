@@ -6,7 +6,7 @@
     "scripts": {
         "start": "electron .",
         "pack": "build --dir",
-        "dist": "build"
+        "dist": "build --ia32 --x64"
     },
     "repository": "https://github.com/aakashbhadana/The-Wall",
     "keywords": [
