@@ -2,7 +2,7 @@
 
 # The Wall
 
-The Wall is a Desktop Application that automatically downloads and changes desktop wallpapers best on the Tags selected by the user. 
+The Wall is a Desktop Application that automatically downloads and changes your desktop wallpaper best on the Tags selected by the user. 
 
 ## Features
 
