@@ -98,8 +98,8 @@ function createWindow() {
 //Creating Config file for first-time setup
 function createConfig(){
     store.set('tutorial','0');
-    store.set('time',{hour:12, min:0});
-    store.set('cache',3);
+    store.set('time',{hour:6, min:0});
+    store.set('cache',5);
     store.set('tags',{});
     store.set('collection',{});
     store.set('walls',{});
