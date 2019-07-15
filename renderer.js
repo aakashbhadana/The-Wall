@@ -154,6 +154,12 @@ ipcRenderer.on('populateUpcoming', (event, walls, dir) => {
 function setTimer(){
     let hr = document.getElementById('hr').value;
     let min =document.getElementById('min').value;
+
+    if(hr<1 || isNaN(hr) || isNaN(min) || hr == "" || min == ""){
+        notify('Duration should be atleast an hour');
+        return null;
+    }
+
     ipcRenderer.send('setTimer',hr,min);    
 }
 
