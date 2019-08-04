@@ -24,6 +24,8 @@
         "electron-store": "^4.0.0",
         "image-downloader": "^3.4.2",
         "internet-available": "^1.0.0",
+        "jquery": "^3.4.1",
+        "jsdom": "^15.1.1",
         "request": "^2.88.0",
         "request-promise": "^4.2.4",
         "wallpaper": "^4.4.1"
