@@ -1,7 +1,3 @@
-# Note
-
-The app is currently not approved by Unsplash.com for production scale therefore the wallpaper requests are limited to 50 downloads per hour for all users. Users may experience problems in wallpaper downloading due to exhausted limit. Download links will be available in "Getting Started" section once app has been approved and released.
-
 ![The Wall](assets/banner.png?raw=true "Splash")
 
 # The Wall
