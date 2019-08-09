@@ -21,7 +21,6 @@ const downloader = require('image-downloader')
 const Store = require('electron-store');
 const internetAvailable = require("internet-available");
 const shell = require('electron').shell;
-const jsdom = require('jsdom');
 
 const store = new Store(); //Storage module, storing data in config.json
 
