@@ -20,8 +20,8 @@ You can download The Wall for Windows right away using the given download links 
 
 ## Download
 
-WINDOWS : [64-bit-Version](dist/The-Wall Setup 1.0.0 x64.exe)
-MAC : Coming soon
+* WINDOWS : [64-bit-Version](/dist/The-Wall Setup 1.0.0 x64.exe)
+* MAC : Coming soon
 
 ## Built with
 
