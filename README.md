@@ -20,7 +20,7 @@ You can download The Wall for Windows right away using the given download links 
 
 ## Download
 
-* WINDOWS : [64-bit-Version](https://github.com/aakashbhadana/The-Wall/blob/master/dist/The-Wall%20Setup%201.0.0%20x64.exe?raw=true)
+* WINDOWS : [64-bit-Version](https://github.com/aakashbhadana/The-Wall/blob/master/dist/The-Wall%20Setup%201.0.0%20x64.exe?raw=true) | [32-bit-Version](https://github.com/aakashbhadana/The-Wall/blob/master/dist/The-Wall%20Setup%201.0.0%20x32.exe?raw=true)
 * MAC : Coming soon
 
 ## Built with
