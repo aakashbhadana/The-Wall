@@ -68,4 +68,4 @@ This project is licensed under the MIT License - see the link [MIT License](http
 
 ## Acknowledgments
 
-All the Wallpapers are taken from freely useable images by the generous community of photographers on [Unsplash](https://unsplash.com/)
+All the Wallpapers are taken from freely useable images ([Read License](https://unsplash.com/license)) by the generous community of photographers on [Unsplash](https://unsplash.com/).
