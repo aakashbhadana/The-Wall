@@ -6,7 +6,7 @@
     "scripts": {
         "start": "electron .",
         "pack": "build --dir",
-        "dist": "build --x64"
+        "dist": "build -w"
     },
     "repository": "https://github.com/aakashbhadana/The-Wall",
     "keywords": [
@@ -30,8 +30,15 @@
     },
     "build": {
         "win": {
-            "target": "NSIS",
-            "icon": "icon.ico"
-        }
-    }
+            "target": [
+              {
+                "target": "nsis",
+                "arch": [
+                  "ia32"
+                ]
+              }
+            ]
+          }
+    },
+    "compression": "store"
 }
