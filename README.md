@@ -8,9 +8,9 @@ The Wall automatically downloads and changes your desktop wallpaper best on the 
 
 * A beautiful UI
 * High Resolution Wallpapers always
-* Users can change how many wallpapers they want to be available offline per Tag
+* Users can change how many wallpapers to be cached offline per Tag
 * Downloads wallpapers automatically in background when required
-* Users can Pause or Resume automatic wallpaper change
+* Users can Pause or Resume automatic wallpaper change cycle
 
 ![The Wallpaper app you need](assets/youneed.png?raw=true "TheWall")
 
