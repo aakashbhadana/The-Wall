@@ -2,7 +2,7 @@
 
 # The Wall
 
-The Wall is a Desktop Application that automatically downloads and changes your desktop wallpaper best on the Tags selected by the user. 
+The Wall automatically downloads and changes your desktop wallpaper best on the Tags selected by the user. 
 
 ## Features
 
@@ -16,7 +16,12 @@ The Wall is a Desktop Application that automatically downloads and changes your 
 
 ## Getting Started
 
-You will be able to download the Windows installer for The Wall App directly from here after the Beta testing, Keep an eye on this space for downloads for your OS.
+You can download The Wall for Windows right away using the given download links or else you can also clone the source code and package it for your own platform. 
+
+## Download
+
+WINDOWS : [64-bit-Version](dist/The-Wall Setup 1.0.0 x64.exe)
+MAC : Coming soon
 
 ## Built with
 
@@ -63,4 +68,4 @@ This project is licensed under the MIT License - see the link [MIT License](http
 
 ## Acknowledgments
 
-All the Wallpapers are taken from the generous community of photographers on [Unsplash](https://unsplash.com/)
+All the Wallpapers are taken from freely useable images by the generous community of photographers on [Unsplash](https://unsplash.com/)
