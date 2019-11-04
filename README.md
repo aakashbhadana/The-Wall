@@ -1,4 +1,4 @@
-![The Wall](assets/banner.png?raw=true "Splash")
+![The Wall](https://raw.githubusercontent.com/aakashbhadana/The-Wall/master/assets/banner.png "Splash")
 
 # The Wall
 
