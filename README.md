@@ -2,6 +2,8 @@
 
 # The Wall
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/77b78f677d854c13bb428171533f0cc1)](https://app.codacy.com/app/aakashbhadana/The-Wall?utm_source=github.com&utm_medium=referral&utm_content=aakashbhadana/The-Wall&utm_campaign=Badge_Grade_Dashboard)
+
 The Wall automatically downloads and changes your desktop wallpaper best on the Tags selected by the user. 
 
 ## Features
